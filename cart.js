@@ -1,4 +1,36 @@
-let cart = [];
+let cart = JSON.parse(localStorage.getItem('jainCafeCart')) || [];
+
+// Function to Save Cart
+function saveCart() {
+    localStorage.setItem('jainCafeCart', JSON.stringify(cart));
+}
+
+// Toast Function
+function showToast(message) {
+    let toastContainer = document.getElementById('toast-container');
+    if (!toastContainer) {
+        toastContainer = document.createElement('div');
+        toastContainer.id = 'toast-container';
+        toastContainer.className = 'toast-container';
+        document.body.appendChild(toastContainer);
+    }
+    
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.innerHTML = `<i data-feather="check-circle" style="color: var(--muted-green); width: 18px; height: 18px;"></i> <span>${message}</span>`;
+    toastContainer.appendChild(toast);
+    
+    if(typeof feather !== 'undefined') feather.replace();
+
+    // Show animation
+    setTimeout(() => toast.classList.add('show'), 10);
+
+    // Remove toast after 3 seconds
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
 
 // DOM Elements
 const cartToggleBtn = document.getElementById('cart-toggle-btn');
@@ -36,12 +68,16 @@ window.addToCart = function(name, price) {
     } else {
         cart.push({ name, price, quantity: 1 });
     }
+    saveCart();
     updateCartCount();
     
-    // Quick open cart for feedback
-    if (!cartSidebar.classList.contains('active')) {
-        toggleCart();
-    } else {
+    // UI Feedback: Bounce and Toast
+    cartToggleBtn.classList.add('bounce');
+    setTimeout(() => cartToggleBtn.classList.remove('bounce'), 300);
+    showToast(`${name} added to cart!`);
+    
+    // Update cart UI if it is open
+    if (cartSidebar.classList.contains('active')) {
         renderCart();
     }
 }
@@ -55,6 +91,7 @@ window.updateQuantity = function(name, change) {
             cart.splice(itemIndex, 1);
         }
     }
+    saveCart();
     updateCartCount();
     renderCart();
 }
@@ -145,8 +182,12 @@ function processCheckout() {
     
     // Clear cart after redirect
     cart = [];
+    saveCart();
     updateCartCount();
     toggleCart();
     custName.value = '';
     custAddress.value = '';
 }
+
+// Initialize on page load
+updateCartCount();
