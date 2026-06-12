@@ -484,3 +484,12 @@ textarea.form-input { resize: vertical; min-height: 100px; }
 .cart-toggle.bounce {
     animation: cartBounce 0.3s ease-in-out;
 }
+
+.cart-input {
+    width: 100%; padding: 0.8rem; margin-bottom: 0.8rem; background: var(--surface-alt);
+    border: 1px solid var(--border); color: var(--text);
+    font-family: 'Outfit'; font-size: 0.95rem; border-radius: 4px; transition: var(--ease);
+}
+.cart-input::placeholder { color: var(--text-muted); }
+.cart-input:focus { outline: none; border-color: var(--terracotta); }
+textarea.cart-input { resize: vertical; min-height: 80px; }
