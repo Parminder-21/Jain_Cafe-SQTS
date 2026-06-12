@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="light">
 
 <head>
@@ -197,6 +197,7 @@
                                 <span class="menu-item-price">₹120</span>
                             </div>
                             <p class="menu-item-desc">Buttery mixed-veg bhaji with toasted pav — the kind that reminds you of Chowpatty.</p>
+                            <button class="add-cart-btn" onclick="addToCart('Mumbai Pav Bhaji', 120)">Add to Cart</button>
                         </div>
                         <div class="menu-item">
                             <div class="menu-item-header">
@@ -204,6 +205,7 @@
                                 <span class="menu-item-price">₹110</span>
                             </div>
                             <p class="menu-item-desc">Spicy chole with soft, fresh kulchas. A solid afternoon snack or light meal.</p>
+                            <button class="add-cart-btn" onclick="addToCart('Delhi Chole Kulche', 110)">Add to Cart</button>
                         </div>
                         <div class="menu-item">
                             <div class="menu-item-header">
@@ -211,6 +213,7 @@
                                 <span class="menu-item-price">₹90</span>
                             </div>
                             <p class="menu-item-desc">Loaded with fresh veggies, cheese, and our green chutney spread. Toasted crispy on the grill.</p>
+                            <button class="add-cart-btn" onclick="addToCart('Grilled Club Sandwich', 90)">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -229,6 +232,7 @@
                                 <span class="menu-item-price">₹140</span>
                             </div>
                             <p class="menu-item-desc">Big, fluffy bhaturas with proper home-style chole. Comes with onion, pickle, and green chutney on the side.</p>
+                            <button class="add-cart-btn" onclick="addToCart('Classic Chole Bhature', 140)">Add to Cart</button>
                         </div>
                         <div class="menu-item">
                             <div class="menu-item-header">
@@ -242,6 +246,7 @@
                                 <span class="variant-tag">Sev</span>
                                 <span class="variant-tag">Makkan</span>
                             </div>
+                            <button class="add-cart-btn" style="margin-top: 1rem;" onclick="addToCart('Stuffed Paratha', 100)">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -260,6 +265,7 @@
                                 <span class="menu-item-price">Starting at ₹199</span>
                             </div>
                             <p class="menu-item-desc">Fresh dough, real cheese, and generous toppings. Our pizzas are made in-house — not frozen, not outsourced. A good option when the kids want something different.</p>
+                            <button class="add-cart-btn" onclick="addToCart('Cafe-Style Pizza', 199)">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -278,6 +284,7 @@
                                 <span class="menu-item-price">₹80</span>
                             </div>
                             <p class="menu-item-desc">Freshly squeezed, seasonal fruits. No syrup, no concentrate — just fruit and ice.</p>
+                            <button class="add-cart-btn" onclick="addToCart('Fresh Juice', 80)">Add to Cart</button>
                         </div>
                         <div class="menu-item">
                             <div class="menu-item-header">
@@ -285,6 +292,7 @@
                                 <span class="menu-item-price">₹110</span>
                             </div>
                             <p class="menu-item-desc">Thick, chilled, and made with real milk. Kids love them, and honestly, so do the parents.</p>
+                            <button class="add-cart-btn" onclick="addToCart('Thick Milk Shake', 110)">Add to Cart</button>
                         </div>
                         <div class="menu-item">
                             <div class="menu-item-header">
@@ -292,6 +300,7 @@
                                 <span class="menu-item-price">₹60 / scoop</span>
                             </div>
                             <p class="menu-item-desc">A simple scoop to finish things off. Multiple flavors available daily.</p>
+                            <button class="add-cart-btn" onclick="addToCart('Ice Cream', 60)">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -383,7 +392,50 @@
         </div>
     </footer>
 
+    <!-- ===== CART UI ===== -->
+    <!-- Cart Toggle Button -->
+    <button id="cart-toggle-btn" class="cart-toggle" aria-label="Open Cart">
+        <i data-feather="shopping-bag"></i>
+        <span id="cart-count" class="cart-count">0</span>
+    </button>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Your Order</h3>
+            <button id="close-cart-btn" class="close-cart-btn" aria-label="Close Cart">
+                <i data-feather="x"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cart-items-container">
+            <div class="empty-cart-msg">Your cart is empty</div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total-row">
+                <span>Total:</span>
+                <span id="cart-total-price">₹0</span>
+            </div>
+            
+            <div class="checkout-form" id="checkout-form-container" style="display: none;">
+                <h4 style="margin-bottom: 0.5rem; font-family: 'Outfit';">Delivery Details</h4>
+                <input type="text" id="cust-name" class="form-input" placeholder="Your Name" required style="padding: 0.6rem; margin-bottom: 0.5rem;">
+                <textarea id="cust-address" class="form-input" placeholder="Delivery Address" rows="2" required style="padding: 0.6rem; min-height: 60px; margin-bottom: 0.5rem;"></textarea>
+                
+                <h4 style="margin-bottom: 0.5rem; font-family: 'Outfit';">Payment Method</h4>
+                <div class="payment-method">
+                    <label><input type="radio" name="payment" value="Cash on Delivery" checked> Cash on Delivery</label><br>
+                    <label><input type="radio" name="payment" value="UPI on Delivery"> UPI on Delivery</label><br>
+                    <label><input type="radio" name="payment" value="Pay Online (UPI)"> Pay Online via WhatsApp</label>
+                </div>
+            </div>
+
+            <button class="btn btn-primary cart-checkout-btn" id="checkout-btn" disabled style="width: 100%; margin-top: 1rem;">Proceed to Checkout</button>
+        </div>
+    </div>
+    <div id="cart-overlay" class="cart-overlay"></div>
+
     <!-- ===== JAVASCRIPT ===== -->
+    <script src="cart.js"></script>
     <script>
         // Initialize icons
         feather.replace();

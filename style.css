@@ -1,4 +1,4 @@
-﻿/* ===== DESIGN TOKENS ===== */
+/* ===== DESIGN TOKENS ===== */
 :root {
     --cream: #FDFBF7;
     --deep-brown: #3A2A22;
@@ -323,3 +323,122 @@ textarea.form-input { resize: vertical; min-height: 100px; }
     .footer-links { justify-content: center; }
 }
 
+/* ===== CART UI ===== */
+.cart-toggle {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--terracotta);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(211, 106, 77, 0.4);
+    cursor: pointer;
+    z-index: 998;
+    transition: var(--ease);
+}
+.cart-toggle:hover { transform: scale(1.05); }
+.cart-count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: var(--deep-brown);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: bold;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--surface);
+}
+
+.cart-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    z-index: 1001;
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--ease);
+}
+.cart-overlay.active { opacity: 1; pointer-events: auto; }
+
+.cart-sidebar {
+    position: fixed;
+    top: 0; right: 0; width: 100%; max-width: 400px; height: 100%;
+    background: var(--surface);
+    box-shadow: -5px 0 30px rgba(0,0,0,0.1);
+    z-index: 1002;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    display: flex;
+    flex-direction: column;
+}
+.cart-sidebar.active { transform: translateX(0); }
+
+.cart-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.cart-header h3 { margin: 0; font-size: 1.5rem; }
+.close-cart-btn {
+    background: none; border: none; color: var(--text); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0.5rem; border-radius: 50%; transition: background 0.2s;
+}
+.close-cart-btn:hover { background: var(--surface-alt); }
+
+.cart-items {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+}
+.empty-cart-msg {
+    text-align: center; color: var(--text-muted); margin-top: 2rem; font-family: 'Outfit';
+}
+.cart-item {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border);
+}
+.cart-item-info h4 { font-size: 1.1rem; margin-bottom: 0.25rem; font-family: 'Outfit'; }
+.cart-item-info p { color: var(--terracotta); font-size: 0.95rem; margin: 0; font-weight: 600; }
+.cart-item-controls {
+    display: flex; align-items: center; gap: 0.75rem;
+}
+.qty-btn {
+    background: var(--surface-alt); border: none; width: 28px; height: 28px;
+    border-radius: 4px; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: var(--text); font-weight: bold; transition: var(--ease);
+}
+.qty-btn:hover { background: var(--border); }
+.item-qty { font-weight: 600; min-width: 20px; text-align: center; }
+
+.cart-footer {
+    padding: 1.5rem; border-top: 1px solid var(--border); background: var(--surface);
+}
+.cart-total-row {
+    display: flex; justify-content: space-between; font-size: 1.25rem; font-weight: bold;
+    margin-bottom: 1.5rem; font-family: 'Outfit'; color: var(--text);
+}
+.checkout-form { margin-bottom: 1rem; }
+.payment-method label { display: block; margin-bottom: 0.4rem; font-size: 0.95rem; cursor: pointer; }
+.payment-method input { margin-right: 0.5rem; accent-color: var(--terracotta); }
+
+.add-cart-btn {
+    margin-top: 0.75rem; background: transparent; border: 2px solid var(--terracotta);
+    color: var(--terracotta); padding: 0.5rem 1.25rem; border-radius: 4px;
+    font-weight: 600; font-family: 'Outfit'; cursor: pointer; transition: var(--ease);
+}
+.add-cart-btn:hover { background: var(--terracotta); color: #fff; }
