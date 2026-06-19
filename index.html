@@ -62,10 +62,12 @@
     }
     </script>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style_v3.css">
 </head>
 
 <body>
+    <!-- Scroll Progress -->
+    <div class="scroll-progress-container"><div class="scroll-progress-bar" id="scroll-progress"></div></div>
 
     <!-- Accessibility: Skip to Content -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -122,7 +124,7 @@
                 </div>
                 <div class="hero-visual reveal">
                     <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=1200"
-                        alt="Warm cafe table spread at Jain Cafe, Indore" class="hero-img" loading="eager">
+                        alt="Warm cafe table spread at Jain Cafe, Indore" class="hero-img" id="hero-img" loading="eager">
                 </div>
             </div>
         </section>
@@ -183,8 +185,19 @@
                     <p>Everything is 100% vegetarian, made fresh when you order, and served hot.</p>
                 </div>
 
-                                <!-- Fast Bites -->
-                <div class="menu-cat reveal">
+                
+                <!-- Sticky Tabs -->
+                <div class="menu-tabs-wrapper reveal" id="menu-tabs-wrapper">
+                    <div class="menu-tabs" id="menu-tabs">
+                        <a href="#cat-fast-bites" class="menu-tab active">Fast Bites</a>
+                        <a href="#cat-favorites" class="menu-tab">Favorites</a>
+                        <a href="#cat-specials" class="menu-tab">Specials</a>
+                        <a href="#cat-drinks" class="menu-tab">Chilled</a>
+                    </div>
+                </div>
+
+                <!-- Fast Bites -->
+                <div id="cat-fast-bites" class="menu-cat reveal" style="scroll-margin-top: 140px;">
                     <div class="cat-title-row">
                         <span class="cat-emoji" aria-hidden="true">⚡</span>
                         <h3>Fast Bites</h3>
@@ -197,7 +210,7 @@
                                 <span class="menu-item-price">₹120</span>
                             </div>
                             <p class="menu-item-desc">Buttery mixed-veg bhaji with toasted pav — the kind that reminds you of Chowpatty.</p>
-                            <button class="add-cart-btn" onclick="addToCart('Mumbai Pav Bhaji', 120)">Add to Cart</button>
+                            <div class="add-to-cart-container" data-item-name="Mumbai Pav Bhaji" data-item-price="120"></div>
                         </div>
                         <div class="menu-item">
                             <div class="menu-item-header">
@@ -205,7 +218,7 @@
                                 <span class="menu-item-price">₹110</span>
                             </div>
                             <p class="menu-item-desc">Spicy chole with soft, fresh kulchas. A solid afternoon snack or light meal.</p>
-                            <button class="add-cart-btn" onclick="addToCart('Delhi Chole Kulche', 110)">Add to Cart</button>
+                            <div class="add-to-cart-container" data-item-name="Delhi Chole Kulche" data-item-price="110"></div>
                         </div>
                         <div class="menu-item">
                             <div class="menu-item-header">
@@ -213,13 +226,13 @@
                                 <span class="menu-item-price">₹90</span>
                             </div>
                             <p class="menu-item-desc">Loaded with fresh veggies, cheese, and our green chutney spread. Toasted crispy on the grill.</p>
-                            <button class="add-cart-btn" onclick="addToCart('Grilled Club Sandwich', 90)">Add to Cart</button>
+                            <div class="add-to-cart-container" data-item-name="Grilled Club Sandwich" data-item-price="90"></div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Filling Favorites -->
-                <div class="menu-cat reveal">
+                <div id="cat-favorites" class="menu-cat reveal" style="scroll-margin-top: 140px;">
                     <div class="cat-title-row">
                         <span class="cat-emoji" aria-hidden="true">🔥</span>
                         <h3>Filling Favorites</h3>
@@ -232,7 +245,7 @@
                                 <span class="menu-item-price">₹140</span>
                             </div>
                             <p class="menu-item-desc">Big, fluffy bhaturas with proper home-style chole. Comes with onion, pickle, and green chutney on the side.</p>
-                            <button class="add-cart-btn" onclick="addToCart('Classic Chole Bhature', 140)">Add to Cart</button>
+                            <div class="add-to-cart-container" data-item-name="Classic Chole Bhature" data-item-price="140"></div>
                         </div>
                         <div class="menu-item">
                             <div class="menu-item-header">
@@ -246,13 +259,13 @@
                                 <span class="variant-tag">Sev</span>
                                 <span class="variant-tag">Makkan</span>
                             </div>
-                            <button class="add-cart-btn" style="margin-top: 1rem;" onclick="addToCart('Stuffed Paratha', 100)">Add to Cart</button>
+                            <div class="add-to-cart-container" data-item-name="Stuffed Paratha" data-item-price="100"></div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Cafe Specials -->
-                <div class="menu-cat reveal">
+                <div id="cat-specials" class="menu-cat reveal" style="scroll-margin-top: 140px;">
                     <div class="cat-title-row">
                         <span class="cat-emoji" aria-hidden="true">✨</span>
                         <h3>Cafe Specials</h3>
@@ -265,13 +278,13 @@
                                 <span class="menu-item-price">Starting at ₹199</span>
                             </div>
                             <p class="menu-item-desc">Fresh dough, real cheese, and generous toppings. Our pizzas are made in-house — not frozen, not outsourced. A good option when the kids want something different.</p>
-                            <button class="add-cart-btn" onclick="addToCart('Cafe-Style Pizza', 199)">Add to Cart</button>
+                            <div class="add-to-cart-container" data-item-name="Cafe-Style Pizza" data-item-price="199"></div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Chilled Treats -->
-                <div class="menu-cat reveal">
+                <div id="cat-drinks" class="menu-cat reveal" style="scroll-margin-top: 140px;">
                     <div class="cat-title-row">
                         <span class="cat-emoji" aria-hidden="true">❄️</span>
                         <h3>Chilled Treats</h3>
@@ -284,7 +297,7 @@
                                 <span class="menu-item-price">₹80</span>
                             </div>
                             <p class="menu-item-desc">Freshly squeezed, seasonal fruits. No syrup, no concentrate — just fruit and ice.</p>
-                            <button class="add-cart-btn" onclick="addToCart('Fresh Juice', 80)">Add to Cart</button>
+                            <div class="add-to-cart-container" data-item-name="Fresh Juice" data-item-price="80"></div>
                         </div>
                         <div class="menu-item">
                             <div class="menu-item-header">
@@ -292,7 +305,7 @@
                                 <span class="menu-item-price">₹110</span>
                             </div>
                             <p class="menu-item-desc">Thick, chilled, and made with real milk. Kids love them, and honestly, so do the parents.</p>
-                            <button class="add-cart-btn" onclick="addToCart('Thick Milk Shake', 110)">Add to Cart</button>
+                            <div class="add-to-cart-container" data-item-name="Thick Milk Shake" data-item-price="110"></div>
                         </div>
                         <div class="menu-item">
                             <div class="menu-item-header">
@@ -300,7 +313,7 @@
                                 <span class="menu-item-price">₹60 / scoop</span>
                             </div>
                             <p class="menu-item-desc">A simple scoop to finish things off. Multiple flavors available daily.</p>
-                            <button class="add-cart-btn" onclick="addToCart('Ice Cream', 60)">Add to Cart</button>
+                            <div class="add-to-cart-container" data-item-name="Ice Cream" data-item-price="60"></div>
                         </div>
                     </div>
                 </div>
@@ -346,21 +359,41 @@
                 <div class="reveal">
                     <div class="contact-card">
                         <h3 style="font-size: 1.6rem; margin-bottom: 1.25rem;">Get in touch</h3>
-                        <form id="contact-form"
-                            onsubmit="event.preventDefault(); document.getElementById('contact-form').reset(); alert('Thanks! We\'ll get back to you shortly.');">
+                        <div data-fs-success style="display: none; background: rgba(125, 159, 138, 0.2); border-left: 4px solid var(--muted-green); padding: 1rem; border-radius: 4px; margin-bottom: 1rem; color: var(--text);">
+                            Thanks! Your message has been sent. We'll get back to you shortly.
+                        </div>
+                        <div data-fs-error style="display: none; color: #ff6b6b; margin-bottom: 1rem;"></div>
+
+                        <form id="contact-form">
                             <label for="name" class="sr-only">Your Name</label>
                             <input type="text" id="name" name="name" class="form-input" placeholder="Your Name" required
-                                autocomplete="name">
+                                autocomplete="name" data-fs-field>
+                            <span data-fs-error="name" style="color: #ff6b6b; font-size: 0.85rem; display: block; margin-top: -0.5rem; margin-bottom: 1rem;"></span>
+
                             <label for="phone" class="sr-only">Phone Number</label>
                             <input type="tel" id="phone" name="phone" class="form-input" placeholder="Phone Number"
-                                required autocomplete="tel">
+                                required autocomplete="tel" data-fs-field>
+                            <span data-fs-error="phone" style="color: #ff6b6b; font-size: 0.85rem; display: block; margin-top: -0.5rem; margin-bottom: 1rem;"></span>
+
                             <label for="message" class="sr-only">Your Message</label>
                             <textarea id="message" name="message" class="form-input"
                                 placeholder="Planning a party? Need bulk orders? Just ask." rows="4"
-                                required></textarea>
-                            <button type="submit" class="btn btn-primary btn-saffron">Send Message</button>
+                                required data-fs-field></textarea>
+                            <span data-fs-error="message" style="color: #ff6b6b; font-size: 0.85rem; display: block; margin-top: -0.5rem; margin-bottom: 1rem;"></span>
+
+                            <button type="submit" class="btn btn-primary btn-saffron" data-fs-submit-btn>Send Message</button>
                         </form>
                     </div>
+                </div>
+            </div>
+
+            <!-- Interactive Google Map -->
+            <div class="container reveal" style="margin-top: 4rem;">
+                <div style="border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); height: 400px; background: var(--surface-alt);">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14721.238804597395!2d75.86790934999999!3d22.7226671!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3962fd3bc839d063%3A0x334ebcba58d34df2!2sYashwant%20Niwas%20Rd%2C%20Indore%2C%20Madhya%20Pradesh!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
+                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
                 </div>
             </div>
         </section>
@@ -432,10 +465,22 @@
             <button class="btn btn-primary cart-checkout-btn" id="checkout-btn" disabled style="width: 100%; margin-top: 1rem;">Proceed to Checkout</button>
         </div>
     </div>
+
+    <!-- Mobile Cart Bar -->
+    <div id="mobile-cart-bar" class="mobile-cart-bar" onclick="toggleCart()">
+        <div class="mcb-info">
+            <span id="mcb-count" class="mcb-count">0 Items</span>
+            <span id="mcb-total" class="mcb-total">₹0</span>
+        </div>
+        <div class="mcb-action">
+            View Cart <i data-feather="arrow-right"></i>
+        </div>
+    </div>
+
     <div id="cart-overlay" class="cart-overlay"></div>
 
     <!-- ===== JAVASCRIPT ===== -->
-    <script src="cart.js"></script>
+    <script src="cart_v3.js"></script>
     <script>
         // Initialize icons
         feather.replace();
@@ -509,7 +554,12 @@
                 link.classList.toggle('active', link.getAttribute('href').substring(1) === current);
             });
         }, { passive: true });
+
+        // --- Formspree Initialization ---
+        window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+        formspree('initForm', { formElement: '#contact-form', formId: 'mqeovral' });
     </script>
+    <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 </body>
 
 </html>

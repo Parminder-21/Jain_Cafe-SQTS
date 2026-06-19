@@ -153,23 +153,18 @@ function renderCart() {
         const itemTotal = item.price * item.quantity;
         total += itemTotal;
         html += `
-            <div class="cart-item">
-                <div class="cart-item-header">
-                    <div class="cart-item-info">
-                        <h4>${item.name}</h4>
-                        <div class="cart-price-calc">₹${item.price} × ${item.quantity}</div>
-                    </div>
-                    <div class="cart-item-total">₹${itemTotal}</div>
+            <div class="cart-item-new">
+                <div class="cart-item-new-left">
+                    <h4 class="cart-item-new-title">${item.name}</h4>
+                    <div class="cart-item-new-price">₹${item.price} x ${item.quantity}</div>
                 </div>
-                <div class="cart-item-actions">
-                    <button class="cart-item-remove" onclick="updateQuantity('${item.name}', -${item.quantity})">
-                        <i data-feather="trash-2" style="width: 14px; height: 14px;"></i> Remove
-                    </button>
-                    <div class="inline-qty-controls" style="margin-top: 0;">
-                        <button class="inline-qty-btn" onclick="updateQuantity('${item.name}', -1)">-</button>
-                        <span class="inline-qty-val">${item.quantity}</span>
-                        <button class="inline-qty-btn" onclick="updateQuantity('${item.name}', 1)">+</button>
+                <div class="cart-item-new-right">
+                    <div class="cart-item-new-controls">
+                        <button class="cart-item-new-btn" onclick="updateQuantity('${item.name}', -1)">-</button>
+                        <span class="cart-item-new-qty">${item.quantity}</span>
+                        <button class="cart-item-new-btn" onclick="updateQuantity('${item.name}', 1)">+</button>
                     </div>
+                    <div class="cart-item-new-subtotal">₹${itemTotal}</div>
                 </div>
             </div>
         `;
@@ -177,9 +172,6 @@ function renderCart() {
 
     cartItemsContainer.innerHTML = html;
     cartTotalPrice.textContent = `₹${total}`;
-    
-    // Re-initialize feather icons if any new ones were added
-    if(typeof feather !== 'undefined') feather.replace();
 }
 
 // Process Checkout
