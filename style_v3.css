@@ -285,7 +285,7 @@ section { padding: 7rem 0; position: relative; }
 .form-input:focus { outline: none; border-color: var(--saffron); }
 textarea.form-input { resize: vertical; min-height: 100px; }
 .btn-saffron { background: var(--saffron); color: var(--deep-brown); width: 100%; font-weight: 700; }
-.btn-saffron:hover { opacity: 0.9; }
+.btn-saffron:hover, .btn-saffron:focus-visible { opacity: 0.9; color: #fff; }
 
 /* ===== FOOTER ===== */
 .footer { padding: 3rem 0; border-top: 1px solid var(--border); }
