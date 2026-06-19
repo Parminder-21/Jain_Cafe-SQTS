@@ -43,6 +43,7 @@ const cartTotalPrice = document.getElementById('cart-total-price');
 const checkoutFormContainer = document.getElementById('checkout-form-container');
 const checkoutBtn = document.getElementById('checkout-btn');
 const custName = document.getElementById('cust-name');
+const custPhone = document.getElementById('cust-phone');
 const custAddress = document.getElementById('cust-address');
 
 // Event Listeners
@@ -177,10 +178,11 @@ function renderCart() {
 // Process Checkout
 async function processCheckout() {
     const name = custName.value.trim();
+    const phone = custPhone.value.trim();
     const address = custAddress.value.trim();
     
-    if (!name || !address) {
-        alert('Please enter your name and delivery address.');
+    if (!name || !phone || !address) {
+        alert('Please enter your name, phone number, and delivery address.');
         return;
     }
 
@@ -197,6 +199,7 @@ async function processCheckout() {
     const formData = new FormData();
     formData.append('_subject', `New Order from ${name}`);
     formData.append('Customer Name', name);
+    formData.append('Phone Number', phone);
     formData.append('Delivery Address', address);
     formData.append('Payment Method', paymentMethod);
     formData.append('Order Items', orderItemsText);
@@ -221,6 +224,7 @@ async function processCheckout() {
             updateCartCount();
             toggleCart();
             custName.value = '';
+            custPhone.value = '';
             custAddress.value = '';
         } else {
             alert('Oops! There was a problem placing your order.');
