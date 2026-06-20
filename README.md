@@ -9,7 +9,7 @@ A responsive, premium web application for Jain Cafe (YN Road, Indore) featuring 
 * **Premium Text-Only Cards**: Elegant layouts featuring category emojis, veg dots, item descriptions, and bestseller badges.
 * **Dynamic Cart System**: LocalStorage-based cart with custom slide-out sidebar, quantity controllers, and a responsive mobile checkout bar.
 * **Formspree Checkout**: Routes placed orders and contact submissions directly to the owner's inbox.
-* **Admin Dashboard (`/admin`)**: A password-protected panel (`jaincafe2025`) enabling real-time addition, editing, and deletion of categories and menu items.
+* **Admin Dashboard (`/admin`)**: A password-protected panel enabling real-time addition, editing, and deletion of categories and menu items.
 * **Express Backend (`server.js`)**: Serves static pages and provides REST API routes to load and modify the JSON menu structure dynamically.
 
 ---
@@ -39,7 +39,7 @@ A responsive, premium web application for Jain Cafe (YN Road, Indore) featuring 
 
 3. **Open the App**:
    - **Customer Landing & Menu**: Navigate to [http://localhost:3000](http://localhost:3000)
-   - **Admin Panel**: Navigate to [http://localhost:3000/admin](http://localhost:3000/admin) (Default password is `jaincafe2025`)
+   - **Admin Panel**: Navigate to [http://localhost:3000/admin](http://localhost:3000/admin) (Password is configured in `server.js`)
 
 ---
 
