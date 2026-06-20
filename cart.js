@@ -1,38 +1,41 @@
+// Manage the customer shopping cart and checkout flow
 let cart = JSON.parse(localStorage.getItem('jainCafeCart')) || [];
 
-// Function to Save Cart
+// Save current cart state to local storage
 function saveCart() {
     localStorage.setItem('jainCafeCart', JSON.stringify(cart));
 }
 
-// Toast Function
+// Display popup notifications for UI feedback
 function showToast(message) {
-    let toastContainer = document.getElementById('toast-container');
-    if (!toastContainer) {
-        toastContainer = document.createElement('div');
-        toastContainer.id = 'toast-container';
-        toastContainer.className = 'toast-container';
-        document.body.appendChild(toastContainer);
+    let container = document.getElementById('toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        container.className = 'toast-container';
+        document.body.appendChild(container);
     }
     
     const toast = document.createElement('div');
     toast.className = 'toast';
     toast.innerHTML = `<i data-feather="check-circle" style="color: var(--muted-green); width: 18px; height: 18px;"></i> <span>${message}</span>`;
-    toastContainer.appendChild(toast);
+    container.appendChild(toast);
     
-    if(typeof feather !== 'undefined') feather.replace();
+    if (typeof feather !== 'undefined') {
+        feather.replace();
+    }
 
-    // Show animation
+    // Smooth entry
     setTimeout(() => toast.classList.add('show'), 10);
 
-    // Remove toast after 3 seconds
+    // Auto-remove after 3 seconds
     setTimeout(() => {
         toast.classList.remove('show');
         setTimeout(() => toast.remove(), 300);
     }, 3000);
 }
 
-// DOM Elements
+// DOM Elements cache
 const cartToggleBtn = document.getElementById('cart-toggle-btn');
 const closeCartBtn = document.getElementById('close-cart-btn');
 const cartSidebar = document.getElementById('cart-sidebar');
@@ -46,13 +49,12 @@ const custName = document.getElementById('cust-name');
 const custPhone = document.getElementById('cust-phone');
 const custAddress = document.getElementById('cust-address');
 
-// Event Listeners
+// Event Handlers
 cartToggleBtn.addEventListener('click', toggleCart);
 closeCartBtn.addEventListener('click', toggleCart);
 cartOverlay.addEventListener('click', toggleCart);
 checkoutBtn.addEventListener('click', processCheckout);
 
-// Function to Toggle Cart
 function toggleCart() {
     cartSidebar.classList.toggle('active');
     cartOverlay.classList.toggle('active');
@@ -61,85 +63,86 @@ function toggleCart() {
     }
 }
 
-// Function to Add to Cart
+// Add a item to the cart or increase its quantity
 window.addToCart = function(name, price) {
-    const existingItem = cart.find(item => item.name === name);
-    if (existingItem) {
-        existingItem.quantity += 1;
+    const existing = cart.find(item => item.name === name);
+    if (existing) {
+        existing.quantity += 1;
     } else {
         cart.push({ name, price, quantity: 1 });
     }
     saveCart();
     updateCartCount();
     
-    // UI Feedback: Bounce and Toast
+    // Animate cart icon and show notification
     cartToggleBtn.classList.add('bounce');
     setTimeout(() => cartToggleBtn.classList.remove('bounce'), 300);
     showToast(`${name} added to cart!`);
     
-    // Update cart UI if it is open
     if (cartSidebar.classList.contains('active')) {
         renderCart();
     }
-}
+};
 
-// Function to Remove or Decrease Quantity
+// Increment/decrement quantity or remove item if it drops below 1
 window.updateQuantity = function(name, change) {
-    const itemIndex = cart.findIndex(item => item.name === name);
-    if (itemIndex > -1) {
-        cart[itemIndex].quantity += change;
-        if (cart[itemIndex].quantity <= 0) {
-            cart.splice(itemIndex, 1);
+    const idx = cart.findIndex(item => item.name === name);
+    if (idx > -1) {
+        cart[idx].quantity += change;
+        if (cart[idx].quantity <= 0) {
+            cart.splice(idx, 1);
         }
     }
     saveCart();
     updateCartCount();
     renderCart();
-}
+};
 
-// Update Cart Badge
+// Update cart counter badges and sync the mobile bottom bar
 function updateCartCount() {
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    if(cartCount) cartCount.textContent = totalItems;
+    if (cartCount) {
+        cartCount.textContent = totalItems;
+    }
     
-    // Update Mobile Cart Bar
     const mcb = document.getElementById('mobile-cart-bar');
     const mcbCount = document.getElementById('mcb-count');
     const mcbTotal = document.getElementById('mcb-total');
     const toggleHidden = document.querySelector('.cart-toggle');
     
     if (mcb && mcbCount && mcbTotal) {
-        mcbCount.textContent = totalItems === 1 ? '1 Item' : totalItems + ' Items';
+        mcbCount.textContent = totalItems === 1 ? '1 Item' : `${totalItems} Items`;
         let totalVal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        mcbTotal.textContent = '₹' + totalVal;
+        mcbTotal.textContent = `₹${totalVal}`;
         
         if (totalItems > 0) {
             mcb.classList.add('visible');
-            if(toggleHidden) toggleHidden.classList.add('hidden-by-mobile-bar');
-            if(checkoutFormContainer) checkoutFormContainer.style.display = 'block';
-            if(checkoutBtn) checkoutBtn.disabled = false;
+            if (toggleHidden) toggleHidden.classList.add('hidden-by-mobile-bar');
+            if (checkoutFormContainer) checkoutFormContainer.style.display = 'block';
+            if (checkoutBtn) checkoutBtn.disabled = false;
         } else {
             mcb.classList.remove('visible');
-            if(toggleHidden) toggleHidden.classList.remove('hidden-by-mobile-bar');
-            if(checkoutFormContainer) checkoutFormContainer.style.display = 'none';
-            if(checkoutBtn) checkoutBtn.disabled = true;
+            if (toggleHidden) toggleHidden.classList.remove('hidden-by-mobile-bar');
+            if (checkoutFormContainer) checkoutFormContainer.style.display = 'none';
+            if (checkoutBtn) checkoutBtn.disabled = true;
         }
     } else {
         if (totalItems > 0) {
-            if(checkoutFormContainer) checkoutFormContainer.style.display = 'block';
-            if(checkoutBtn) checkoutBtn.disabled = false;
+            if (checkoutFormContainer) checkoutFormContainer.style.display = 'block';
+            if (checkoutBtn) checkoutBtn.disabled = false;
         } else {
-            if(checkoutFormContainer) checkoutFormContainer.style.display = 'none';
-            if(checkoutBtn) checkoutBtn.disabled = true;
+            if (checkoutFormContainer) checkoutFormContainer.style.display = 'none';
+            if (checkoutBtn) checkoutBtn.disabled = true;
         }
     }
     
-    if(typeof renderInlineCartControls === 'function') {
-        renderInlineCartControls();
+    // Refresh the dynamic menu cards if they are loaded
+    if (typeof window._mcRefreshPanel === 'function') {
+        window._mcRefreshPanel();
     }
 }
 
-// Render Cart Items UI
+// Generate the items list within the slide-out cart sidebar
 function renderCart() {
     if (cart.length === 0) {
         cartItemsContainer.innerHTML = '<div class="empty-cart-msg">Your cart is empty</div>';
@@ -175,20 +178,20 @@ function renderCart() {
     cartTotalPrice.textContent = `₹${total}`;
 }
 
-// Process Checkout
+// Submit the order data to Formspree API
 async function processCheckout() {
     const name = custName.value.trim();
     const phone = custPhone.value.trim();
     const address = custAddress.value.trim();
     
     if (!name || !phone || !address) {
-        alert('Please enter your name, phone number, and delivery address.');
+        alert('Please fill out all delivery details.');
         return;
     }
 
     const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
     
-    let orderItemsText = "";
+    let orderItemsText = '';
     let total = 0;
     cart.forEach(item => {
         const itemTotal = item.price * item.quantity;
@@ -218,7 +221,6 @@ async function processCheckout() {
         
         if (response.ok) {
             alert('Your order has been placed successfully! We will contact you shortly.');
-            // Clear cart
             cart = [];
             saveCart();
             updateCartCount();
@@ -227,94 +229,35 @@ async function processCheckout() {
             custPhone.value = '';
             custAddress.value = '';
         } else {
-            alert('Oops! There was a problem placing your order.');
+            alert('Could not place order. Please try again.');
         }
-    } catch (error) {
-        alert('Oops! There was a problem connecting to the server.');
+    } catch (err) {
+        alert('Connection error. Please check your network.');
     } finally {
         checkoutBtn.textContent = originalText;
         checkoutBtn.disabled = false;
     }
 }
 
-// Initialize on page load
-updateCartCount();
-
-
-// --- PREMIUM UI EFFECTS & INLINE CART ---
-window.renderInlineCartControls = function() {
-    const containers = document.querySelectorAll('.add-to-cart-container');
-    containers.forEach(container => {
-        const name = container.getAttribute('data-item-name');
-        const price = parseInt(container.getAttribute('data-item-price'));
-        const item = cart.find(i => i.name === name);
-        
-        if (item) {
-            container.innerHTML = `
-                <div class="inline-qty-controls">
-                    <button class="inline-qty-btn" onclick="updateQuantity('${name}', -1)">-</button>
-                    <span class="inline-qty-val">${item.quantity}</span>
-                    <button class="inline-qty-btn" onclick="updateQuantity('${name}', 1)">+</button>
-                </div>
-            `;
-        } else {
-            container.innerHTML = `
-                <button class="add-cart-btn" style="margin-top:0.75rem;" onclick="addToCart('${name}', ${price})">Add to Cart</button>
-            `;
-        }
-    });
-}
-
+// Initialize components
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Scroll Progress & Parallax Hero
+    updateCartCount();
+
+    // Scroll progress line tracker
     const progressBar = document.getElementById('scroll-progress');
     const heroImg = document.getElementById('hero-img');
     
     window.addEventListener('scroll', () => {
-        // Scroll Progress
         if (progressBar) {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const scrolled = (winScroll / height) * 100;
-            progressBar.style.width = scrolled + "%";
+            progressBar.style.width = `${scrolled}%`;
         }
         
-        // Parallax Hero
         if (heroImg) {
             const scrollY = window.scrollY;
             heroImg.style.transform = `translateY(${scrollY * 0.4}px)`;
         }
     }, { passive: true });
-    
-    // 2. Sticky Menu Tabs Highlighting
-    const menuCats = document.querySelectorAll('.menu-cat');
-    const menuTabs = document.querySelectorAll('.menu-tab');
-    
-    if (menuCats.length > 0 && menuTabs.length > 0) {
-        const catObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const id = entry.target.getAttribute('id');
-                    menuTabs.forEach(tab => {
-                        tab.classList.remove('active');
-                        if (tab.getAttribute('href') === `#${id}`) {
-                            tab.classList.add('active');
-                            const tabsContainer = document.getElementById('menu-tabs');
-                            if (tabsContainer) {
-                                tabsContainer.scrollTo({
-                                    left: tab.offsetLeft - tabsContainer.offsetWidth / 2 + tab.offsetWidth / 2,
-                                    behavior: 'smooth'
-                                });
-                            }
-                        }
-                    });
-                }
-            });
-        }, { threshold: 0.1, rootMargin: '-150px 0px -50% 0px' });
-        
-        menuCats.forEach(cat => catObserver.observe(cat));
-    }
-    
-    // Initial render
-    renderInlineCartControls();
 });

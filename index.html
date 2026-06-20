@@ -62,7 +62,7 @@
     }
     </script>
 
-    <link rel="stylesheet" href="style_v3.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -94,6 +94,9 @@
             </nav>
 
             <div class="header-actions">
+                <a href="/admin" class="theme-toggle" aria-label="Admin Dashboard" title="Admin Dashboard">
+                    <i data-feather="lock"></i>
+                </a>
                 <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
                     <i data-feather="moon" id="theme-icon"></i>
                 </button>
@@ -185,143 +188,28 @@
                     <p>Everything is 100% vegetarian, made fresh when you order, and served hot.</p>
                 </div>
 
-                
-                <!-- Sticky Tabs -->
+                <!-- Sticky Tabs — injected by menu-loader.js -->
                 <div class="menu-tabs-wrapper reveal" id="menu-tabs-wrapper">
-                    <div class="menu-tabs" id="menu-tabs">
-                        <a href="#cat-fast-bites" class="menu-tab active">Fast Bites</a>
-                        <a href="#cat-favorites" class="menu-tab">Favorites</a>
-                        <a href="#cat-specials" class="menu-tab">Specials</a>
-                        <a href="#cat-drinks" class="menu-tab">Chilled</a>
-                    </div>
+                    <div class="menu-tabs" id="menu-tabs"></div>
                 </div>
 
-                <!-- Fast Bites -->
-                <div id="cat-fast-bites" class="menu-cat reveal" style="scroll-margin-top: 140px;">
-                    <div class="cat-title-row">
-                        <span class="cat-emoji" aria-hidden="true">⚡</span>
-                        <h3>Fast Bites</h3>
-                        <span class="cat-line"></span>
-                    </div>
-                    <div class="menu-list">
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Mumbai Pav Bhaji</span>
-                                <span class="menu-item-price">₹120</span>
-                            </div>
-                            <p class="menu-item-desc">Buttery mixed-veg bhaji with toasted pav — the kind that reminds you of Chowpatty.</p>
-                            <div class="add-to-cart-container" data-item-name="Mumbai Pav Bhaji" data-item-price="120"></div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Delhi Chole Kulche</span>
-                                <span class="menu-item-price">₹110</span>
-                            </div>
-                            <p class="menu-item-desc">Spicy chole with soft, fresh kulchas. A solid afternoon snack or light meal.</p>
-                            <div class="add-to-cart-container" data-item-name="Delhi Chole Kulche" data-item-price="110"></div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Grilled Club Sandwich</span>
-                                <span class="menu-item-price">₹90</span>
-                            </div>
-                            <p class="menu-item-desc">Loaded with fresh veggies, cheese, and our green chutney spread. Toasted crispy on the grill.</p>
-                            <div class="add-to-cart-container" data-item-name="Grilled Club Sandwich" data-item-price="90"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Filling Favorites -->
-                <div id="cat-favorites" class="menu-cat reveal" style="scroll-margin-top: 140px;">
-                    <div class="cat-title-row">
-                        <span class="cat-emoji" aria-hidden="true">🔥</span>
-                        <h3>Filling Favorites</h3>
-                        <span class="cat-line"></span>
-                    </div>
-                    <div class="menu-list">
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name signature">Classic Chole Bhature <span class="sig-badge" style="position:relative; top:-2px; margin-left:8px;">Popular</span></span>
-                                <span class="menu-item-price">₹140</span>
-                            </div>
-                            <p class="menu-item-desc">Big, fluffy bhaturas with proper home-style chole. Comes with onion, pickle, and green chutney on the side.</p>
-                            <div class="add-to-cart-container" data-item-name="Classic Chole Bhature" data-item-price="140"></div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name signature">Stuffed Parathas <span class="sig-badge" style="position:relative; top:-2px; margin-left:8px;">Popular</span></span>
-                                <span class="menu-item-price">₹80 – ₹120</span>
-                            </div>
-                            <p class="menu-item-desc">Pick your stuffing and we'll serve it hot off the tawa with a generous helping of Makkan.</p>
-                            <div class="menu-item-variants">
-                                <span class="variant-tag">Aloo</span>
-                                <span class="variant-tag">Paneer</span>
-                                <span class="variant-tag">Sev</span>
-                                <span class="variant-tag">Makkan</span>
-                            </div>
-                            <div class="add-to-cart-container" data-item-name="Stuffed Paratha" data-item-price="100"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Cafe Specials -->
-                <div id="cat-specials" class="menu-cat reveal" style="scroll-margin-top: 140px;">
-                    <div class="cat-title-row">
-                        <span class="cat-emoji" aria-hidden="true">✨</span>
-                        <h3>Cafe Specials</h3>
-                        <span class="cat-line"></span>
-                    </div>
-                    <div class="menu-list">
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Cafe-Style Pizzas</span>
-                                <span class="menu-item-price">Starting at ₹199</span>
-                            </div>
-                            <p class="menu-item-desc">Fresh dough, real cheese, and generous toppings. Our pizzas are made in-house — not frozen, not outsourced. A good option when the kids want something different.</p>
-                            <div class="add-to-cart-container" data-item-name="Cafe-Style Pizza" data-item-price="199"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Chilled Treats -->
-                <div id="cat-drinks" class="menu-cat reveal" style="scroll-margin-top: 140px;">
-                    <div class="cat-title-row">
-                        <span class="cat-emoji" aria-hidden="true">❄️</span>
-                        <h3>Chilled Treats</h3>
-                        <span class="cat-line"></span>
-                    </div>
-                    <div class="menu-list">
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Fresh Juices</span>
-                                <span class="menu-item-price">₹80</span>
-                            </div>
-                            <p class="menu-item-desc">Freshly squeezed, seasonal fruits. No syrup, no concentrate — just fruit and ice.</p>
-                            <div class="add-to-cart-container" data-item-name="Fresh Juice" data-item-price="80"></div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Thick Milk Shakes</span>
-                                <span class="menu-item-price">₹110</span>
-                            </div>
-                            <p class="menu-item-desc">Thick, chilled, and made with real milk. Kids love them, and honestly, so do the parents.</p>
-                            <div class="add-to-cart-container" data-item-name="Thick Milk Shake" data-item-price="110"></div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Ice Cream</span>
-                                <span class="menu-item-price">₹60 / scoop</span>
-                            </div>
-                            <p class="menu-item-desc">A simple scoop to finish things off. Multiple flavors available daily.</p>
-                            <div class="add-to-cart-container" data-item-name="Ice Cream" data-item-price="60"></div>
-                        </div>
+                <!-- Menu categories — rendered by menu-loader.js -->
+                <div id="menu-categories-container">
+                    <!-- Skeleton shown while loading -->
+                    <div class="menu-list" style="margin-top:1rem;">
+                        <div class="menu-item skel-card"><div class="skel skel-name"></div><div class="skel skel-price"></div></div>
+                        <div class="menu-item skel-card"><div class="skel skel-name"></div><div class="skel skel-price"></div></div>
+                        <div class="menu-item skel-card"><div class="skel skel-name"></div><div class="skel skel-price"></div></div>
+                        <div class="menu-item skel-card"><div class="skel skel-name"></div><div class="skel skel-price"></div></div>
+                        <div class="menu-item skel-card"><div class="skel skel-name"></div><div class="skel skel-price"></div></div>
+                        <div class="menu-item skel-card"><div class="skel skel-name"></div><div class="skel skel-price"></div></div>
                     </div>
                 </div>
 
             </div>
         </section>
 
-        <!-- Location & Contact -->
+                <!-- Location & Contact -->
         <section id="visit" class="location-section">
             <div class="bg-pattern" style="opacity: 0.04;"></div>
             <div class="container location-grid">
@@ -419,6 +307,7 @@
                 <a href="#about" class="footer-link">Story</a>
                 <a href="#menu" class="footer-link">Menu</a>
                 <a href="#visit" class="footer-link">Location</a>
+                <a href="/admin" class="footer-link">Admin Login 🔐</a>
             </nav>
 
             <p class="footer-copy">&copy; 2025 Jain Cafe, YN Road, Indore. Pure Veg.</p>
@@ -484,7 +373,8 @@
     <div id="cart-overlay" class="cart-overlay"></div>
 
     <!-- ===== JAVASCRIPT ===== -->
-    <script src="cart_v3.js"></script>
+    <script src="menu.js"></script>
+    <script src="cart.js"></script>
     <script>
         // Initialize icons
         feather.replace();

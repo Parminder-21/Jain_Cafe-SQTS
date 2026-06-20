@@ -1,24 +1,48 @@
 # Jain Cafe
 
-A responsive, beautiful static website for Jain Cafe - a pure veg cafe located on YN Road, Indore.
+A responsive, premium web application for Jain Cafe (YN Road, Indore) featuring a dynamic menu system, a robust shopping cart, and a password-protected administrator dashboard.
 
-## Features
-- **Modern UI/UX**: Clean layout with dark/light mode toggle, parallax scrolling, and scroll progress indicators.
-- **Sticky Navigation**: Smooth category tab navigation that highlights as you scroll.
-- **Dynamic Cart System**: LocalStorage-based cart with inline quantity controls and a responsive mobile cart bar.
-- **Email Checkout**: Fully integrated with Formspree to route customer orders directly to your email inbox.
-- **Contact & Location**: Live Google Maps embed and a functional AJAX-based contact form.
-- **No Build Required**: Pure vanilla HTML, CSS, and JS.
+## 🚀 Key Features
 
-## Setup
-Simply clone the repository and open `index.html` in your favorite web browser. No build steps or installations required!
+* **Tab-Based Category Filtering**: Eliminates vertical scroll fatigue by rendering one category grid at a time (inspired by Swiggy/Zomato UX).
+* **Live Search**: Customers can instantly search and filter items inside the active category tab.
+* **Premium Text-Only Cards**: Elegant layouts featuring category emojis, veg dots, item descriptions, and bestseller badges.
+* **Dynamic Cart System**: LocalStorage-based cart with custom slide-out sidebar, quantity controllers, and a responsive mobile checkout bar.
+* **Formspree Checkout**: Routes placed orders and contact submissions directly to the owner's inbox.
+* **Admin Dashboard (`/admin`)**: A password-protected panel (`jaincafe2025`) enabling real-time addition, editing, and deletion of categories and menu items.
+* **Express Backend (`server.js`)**: Serves static pages and provides REST API routes to load and modify the JSON menu structure dynamically.
 
-## Tech Stack
-- HTML5
-- CSS3 (Custom properties, Flexbox, Grid)
-- Vanilla JavaScript
-- Formspree (Forms & Order Routing)
-- Feather Icons
+---
 
-## License
+## 🛠️ Tech Stack
+
+* **Frontend**: HTML5, Vanilla CSS3 (Custom Variables, Flexbox, Grid), JavaScript (ES6)
+* **Backend**: Node.js, Express.js, CORS
+* **Storage**: Local JSON database (`data/menu.json`)
+* **Utilities**: Feather Icons, Formspree AJAX integration
+
+---
+
+## 💻 Local Setup & Installation
+
+1. **Install Dependencies**:
+   Ensure you have Node.js installed, then run:
+   ```bash
+   npm install
+   ```
+
+2. **Launch the Server**:
+   Start the Node server:
+   ```bash
+   node server.js
+   ```
+
+3. **Open the App**:
+   - **Customer Landing & Menu**: Navigate to [http://localhost:3000](http://localhost:3000)
+   - **Admin Panel**: Navigate to [http://localhost:3000/admin](http://localhost:3000/admin) (Default password is `jaincafe2025`)
+
+---
+
+## 📄 License
+
 MIT

@@ -1,0 +1,648 @@
+{
+  "categories": [
+    {
+      "id": "cat-snacks",
+      "name": "Snacks & Bites",
+      "emoji": "⚡",
+      "items": [
+        {
+          "id": "item-001",
+          "name": "Chole Kulche",
+          "price": 140,
+          "popular": false,
+          "desc": "Spicy white chickpea chole with soft, fluffy kulcha. Served with onion & chutney."
+        },
+        {
+          "id": "item-002",
+          "name": "Cheese Chole Kulche",
+          "price": 170,
+          "popular": false,
+          "desc": "Classic chole kulche loaded with melted cheese for an extra indulgent bite."
+        },
+        {
+          "id": "item-003",
+          "name": "Paneer Chole Kulche",
+          "price": 170,
+          "popular": false,
+          "desc": "Soft paneer cubes dunked in spicy chole, paired with fresh kulcha."
+        },
+        {
+          "id": "item-004",
+          "name": "Extra Kulcha",
+          "price": 40,
+          "popular": false,
+          "desc": "Add an extra soft, warm kulcha to your order."
+        },
+        {
+          "id": "item-005",
+          "name": "Butter Pav Bhaji",
+          "price": 110,
+          "popular": true,
+          "desc": "Mumbai-style buttery mixed veg bhaji with toasted pav. A true Chowpatty classic."
+        },
+        {
+          "id": "item-006",
+          "name": "Paneer Pav Bhaji",
+          "price": 160,
+          "popular": false,
+          "desc": "Our signature bhaji with generous paneer chunks, served with butter-toasted pav."
+        },
+        {
+          "id": "item-007",
+          "name": "Cheese Pav Bhaji",
+          "price": 170,
+          "popular": false,
+          "desc": "Rich bhaji topped with melted cheese — the ultimate comfort food combo."
+        },
+        {
+          "id": "item-008",
+          "name": "Jain Pav Bhaji",
+          "price": 150,
+          "popular": false,
+          "desc": "No onion, no garlic — pure Jain bhaji recipe with all the flavour."
+        },
+        {
+          "id": "item-009",
+          "name": "Extra Pav",
+          "price": 25,
+          "popular": false,
+          "desc": "Two extra butter-toasted pav buns on the side."
+        },
+        {
+          "id": "item-010",
+          "name": "Masala Pav",
+          "price": 90,
+          "popular": false,
+          "desc": "Soft pav tossed in spicy masala with onions and tomatoes. A quick snack favourite."
+        },
+        {
+          "id": "item-011",
+          "name": "Veg Corn Maggi",
+          "price": 120,
+          "popular": false,
+          "desc": "Maggi noodles cooked with sweet corn and fresh vegetables in our secret masala."
+        },
+        {
+          "id": "item-012",
+          "name": "Veg Corn Cheese Maggi",
+          "price": 150,
+          "popular": false,
+          "desc": "Corn maggi smothered in melted cheese — kids absolutely love this one."
+        },
+        {
+          "id": "item-013",
+          "name": "Veg Punjabi Cheese Maggi",
+          "price": 150,
+          "popular": false,
+          "desc": "Punjabi-spiced maggi with veggies and a generous cheese topping."
+        },
+        {
+          "id": "item-014",
+          "name": "Veg Masala Maggi",
+          "price": 70,
+          "popular": false,
+          "desc": "Simple, nostalgic, perfectly spiced maggi. Just like home."
+        },
+        {
+          "id": "item-015",
+          "name": "Masala Cheese Maggi",
+          "price": 80,
+          "popular": false,
+          "desc": "Spicy masala maggi with cheese — the perfect evening snack."
+        },
+        {
+          "id": "item-016",
+          "name": "Vegetable Maggi",
+          "price": 90,
+          "popular": false,
+          "desc": "Nutritious maggi loaded with fresh mixed vegetables and herbs."
+        },
+        {
+          "id": "item-017",
+          "name": "Veg Cheese Maggi",
+          "price": 110,
+          "popular": false,
+          "desc": "Classic veg maggi upgraded with a thick layer of melted cheese on top."
+        },
+        {
+          "id": "item-018",
+          "name": "Masala Maggi",
+          "price": 50,
+          "popular": false,
+          "desc": "The original — hot, spicy and simple. Made fresh when you order."
+        },
+        {
+          "id": "item-019",
+          "name": "Cheese Paneer Maggi",
+          "price": 150,
+          "popular": false,
+          "desc": "Soft paneer and melted cheese make this the most indulgent maggi on our menu."
+        },
+        {
+          "id": "item-020",
+          "name": "French Fries Plain",
+          "price": 110,
+          "popular": false,
+          "desc": "Crispy golden fries, lightly salted and perfectly fried. Served with ketchup."
+        },
+        {
+          "id": "item-021",
+          "name": "French Fries Masala",
+          "price": 120,
+          "popular": false,
+          "desc": "Crispy fries tossed in our special house masala — addictive and full of flavour."
+        },
+        {
+          "id": "item-022",
+          "name": "Peri Peri Fries",
+          "price": 140,
+          "popular": false,
+          "desc": "Fries coated in tangy peri-peri spice — fiery, crunchy and hard to stop eating."
+        },
+        {
+          "id": "item-023",
+          "name": "Veggie Finger (6 pcs)",
+          "price": 120,
+          "popular": false,
+          "desc": "Six crispy vegetable fingers with a crunchy coating. Great as a starter."
+        },
+        {
+          "id": "item-024",
+          "name": "Cheese Finger (6 pcs)",
+          "price": 100,
+          "popular": false,
+          "desc": "Gooey cheese-filled fingers with a golden crust. Pulls apart beautifully."
+        },
+        {
+          "id": "item-025",
+          "name": "Garlic Bread (10 pcs)",
+          "price": 120,
+          "popular": false,
+          "desc": "Ten pieces of buttery, crispy garlic bread with herbs. Perfect to share."
+        },
+        {
+          "id": "item-026",
+          "name": "Sabudana Tikki Dahi (4 pcs)",
+          "price": 120,
+          "popular": false,
+          "desc": "Crispy sabudana tikkis served with chilled creamy dahi. A Jain favourite."
+        },
+        {
+          "id": "item-027",
+          "name": "Tandoori Masala Sandwich",
+          "price": 90,
+          "popular": false,
+          "desc": "Grilled sandwich with a bold tandoori masala filling and green chutney spread."
+        },
+        {
+          "id": "item-028",
+          "name": "Paneer Masala Sandwich",
+          "price": 90,
+          "popular": false,
+          "desc": "Spiced paneer filling in a crispy grilled sandwich. Quick, filling and delicious."
+        },
+        {
+          "id": "item-029",
+          "name": "Paneer Tikka Cheese Sandwich",
+          "price": 120,
+          "popular": false,
+          "desc": "Tandoori-spiced paneer with melted cheese in a toasted sandwich. A crowd-puller."
+        },
+        {
+          "id": "item-030",
+          "name": "Mini Cheese Club Sandwich",
+          "price": 220,
+          "popular": true,
+          "desc": "Triple-decker club sandwich loaded with veggies, cheese and our signature spread."
+        },
+        {
+          "id": "item-031",
+          "name": "Veg Club Sandwich",
+          "price": 120,
+          "popular": false,
+          "desc": "Classic club sandwich with fresh veggies, crunchy layers and green chutney."
+        },
+        {
+          "id": "item-032",
+          "name": "Tandoori Paneer Sandwich",
+          "price": 180,
+          "popular": false,
+          "desc": "Rich tandoori paneer filling in a toasted sandwich — restaurant quality at cafe price."
+        },
+        {
+          "id": "item-033",
+          "name": "Veg Cheese Sandwich",
+          "price": 90,
+          "popular": false,
+          "desc": "Simple, satisfying grilled sandwich with fresh veggies and melted cheese."
+        },
+        {
+          "id": "item-034",
+          "name": "Cheese Buttery Sandwich",
+          "price": 80,
+          "popular": false,
+          "desc": "Generously buttered sandwich with cheese — crispy outside, soft and gooey inside."
+        },
+        {
+          "id": "item-035",
+          "name": "Italian Masala Sandwich",
+          "price": 50,
+          "popular": false,
+          "desc": "Italian herbs meet Indian masala in this affordable and tasty grilled sandwich."
+        }
+      ]
+    },
+    {
+      "id": "cat-parathas",
+      "name": "Parathas",
+      "emoji": "🫓",
+      "items": [
+        {
+          "id": "item-036",
+          "name": "Punjabi Aloo Paratha",
+          "price": 50,
+          "popular": false,
+          "desc": "Thick, golden aloo-stuffed paratha from the tawa with butter & dahi on the side."
+        },
+        {
+          "id": "item-037",
+          "name": "Mix Veg Paratha",
+          "price": 60,
+          "popular": false,
+          "desc": "A flavourful mix of seasonal vegetables stuffed into a crispy, buttery paratha."
+        },
+        {
+          "id": "item-038",
+          "name": "Aloo Pyaz Paratha",
+          "price": 45,
+          "popular": false,
+          "desc": "Classic aloo with caramelized onion filling — simple, tasty and filling."
+        },
+        {
+          "id": "item-039",
+          "name": "Aloo Paratha",
+          "price": 40,
+          "popular": false,
+          "desc": "The original. Spiced mashed potato stuffed in crispy flatbread. Served hot off the tawa."
+        },
+        {
+          "id": "item-040",
+          "name": "Aloo Methi Paratha",
+          "price": 50,
+          "popular": false,
+          "desc": "Potato and fresh fenugreek leaves — earthy, healthy and absolutely delicious."
+        },
+        {
+          "id": "item-041",
+          "name": "Methi Pyaz Paratha",
+          "price": 50,
+          "popular": false,
+          "desc": "Methi and onion paratha — a slightly bitter, wonderfully aromatic combination."
+        },
+        {
+          "id": "item-042",
+          "name": "Aloo Paneer Paratha",
+          "price": 70,
+          "popular": false,
+          "desc": "The best of both — creamy paneer and spiced aloo in a golden crispy paratha."
+        },
+        {
+          "id": "item-043",
+          "name": "Pyaz Paneer Paratha",
+          "price": 80,
+          "popular": false,
+          "desc": "Fresh paneer with sharp onion filling — served with homemade pickle."
+        },
+        {
+          "id": "item-044",
+          "name": "Paneer Paratha",
+          "price": 90,
+          "popular": false,
+          "desc": "Soft, fresh paneer with mild spices stuffed in a thick, crispy paratha."
+        },
+        {
+          "id": "item-045",
+          "name": "Cheese Paneer Paratha",
+          "price": 120,
+          "popular": true,
+          "desc": "Paneer and melted cheese together in a paratha — the most ordered item on this menu."
+        },
+        {
+          "id": "item-046",
+          "name": "Veg Corn Cheese Paratha",
+          "price": 130,
+          "popular": false,
+          "desc": "Sweet corn and cheese in a paratha — a kids' favourite that adults love too."
+        },
+        {
+          "id": "item-047",
+          "name": "Veg Noodles Paratha",
+          "price": 80,
+          "popular": false,
+          "desc": "A fun fusion — spiced noodles wrapped in a crispy golden paratha."
+        },
+        {
+          "id": "item-048",
+          "name": "Jain Paratha",
+          "price": 130,
+          "popular": false,
+          "desc": "Made with no onion, no garlic, no root vegetables. Pure Jain preparation."
+        },
+        {
+          "id": "item-049",
+          "name": "Sada Butter Paratha",
+          "price": 30,
+          "popular": false,
+          "desc": "A plain crispy paratha with generous butter — the perfect side."
+        },
+        {
+          "id": "item-050",
+          "name": "Tawa Roti Sada",
+          "price": 15,
+          "popular": false,
+          "desc": "Simple, soft roti made fresh on the tawa. Goes with any sabzi."
+        },
+        {
+          "id": "item-051",
+          "name": "Tawa Roti Dahi",
+          "price": 20,
+          "popular": false,
+          "desc": "Soft tawa roti served with fresh, chilled dahi. Light and satisfying."
+        }
+      ]
+    },
+    {
+      "id": "cat-meals",
+      "name": "Main Course & Combos",
+      "emoji": "🍛",
+      "items": [
+        {
+          "id": "item-052",
+          "name": "Sev Tamatar (300 ml)",
+          "price": 140,
+          "popular": false,
+          "desc": "Rajasthani sev tamatar gravy — tangy, spicy and perfect with roti or rice."
+        },
+        {
+          "id": "item-053",
+          "name": "Aloo Masala (300 ml)",
+          "price": 150,
+          "popular": false,
+          "desc": "Thick potato gravy with whole spices and tomatoes. Goes great with paratha."
+        },
+        {
+          "id": "item-054",
+          "name": "Dal Makhani (300 ml)",
+          "price": 150,
+          "popular": true,
+          "desc": "Slow-cooked black dal with cream and butter — rich, silky and absolutely irresistible."
+        },
+        {
+          "id": "item-055",
+          "name": "Chana Masala (300 ml)",
+          "price": 150,
+          "popular": false,
+          "desc": "Bold, tangy chickpea curry with whole spices. A protein-packed, satisfying dish."
+        },
+        {
+          "id": "item-056",
+          "name": "Rajma (300 ml)",
+          "price": 150,
+          "popular": false,
+          "desc": "Kidney beans slow-cooked in a thick, flavourful tomato-onion masala."
+        },
+        {
+          "id": "item-057",
+          "name": "Matar Paneer (300 ml)",
+          "price": 190,
+          "popular": false,
+          "desc": "Green peas and soft paneer in a creamy tomato-based gravy. A timeless classic."
+        },
+        {
+          "id": "item-058",
+          "name": "Dahi (100 ml)",
+          "price": 20,
+          "popular": false,
+          "desc": "Fresh, thick homemade-style dahi to cool down your spicy meal."
+        },
+        {
+          "id": "item-059",
+          "name": "Veg Pulao",
+          "price": 120,
+          "popular": false,
+          "desc": "Fragrant basmati rice cooked with mixed vegetables and whole spices."
+        },
+        {
+          "id": "item-060",
+          "name": "Veg Paneer Pulao",
+          "price": 190,
+          "popular": false,
+          "desc": "Aromatic pulao with soft paneer cubes and fresh vegetables. A complete meal."
+        },
+        {
+          "id": "item-061",
+          "name": "Chhola Rice",
+          "price": 130,
+          "popular": false,
+          "desc": "Steamed basmati rice paired with thick, spicy chole — comfort food at its best."
+        },
+        {
+          "id": "item-062",
+          "name": "Rajma Rice",
+          "price": 130,
+          "popular": false,
+          "desc": "The iconic Punjabi combination — rajma served over fluffy steamed rice."
+        },
+        {
+          "id": "item-063",
+          "name": "Jeera Rice",
+          "price": 90,
+          "popular": false,
+          "desc": "Fragrant cumin-tempered basmati rice — light, simple and pairs with anything."
+        },
+        {
+          "id": "item-064",
+          "name": "Dal Makhani Rice",
+          "price": 130,
+          "popular": false,
+          "desc": "Our creamy dal makhani served with steamed basmati rice. Pure comfort."
+        },
+        {
+          "id": "item-065",
+          "name": "Butter Khichdi",
+          "price": 150,
+          "popular": true,
+          "desc": "Soft, buttery khichdi made with rice and lentils — light, nutritious and delicious."
+        },
+        {
+          "id": "item-066",
+          "name": "Combo: 2 Punjabi Aloo Paratha + Dahi, Pyaz, Chutney",
+          "price": 110,
+          "popular": false,
+          "desc": "Two hot aloo parathas with dahi, fresh onion and green chutney. Best value meal."
+        },
+        {
+          "id": "item-067",
+          "name": "Combo: Paneer & Aloo Paratha + Dahi, Pyaz, Chutney",
+          "price": 150,
+          "popular": true,
+          "desc": "One paneer and one aloo paratha — a filling combo served with all accompaniments."
+        },
+        {
+          "id": "item-068",
+          "name": "Combo: Methi & Mix Veg Paratha + Dahi, Pyaz, Chutney",
+          "price": 120,
+          "popular": false,
+          "desc": "Healthy methi and veg parathas served with the complete dahi-chutney combo."
+        },
+        {
+          "id": "item-069",
+          "name": "Combo: 2 Aloo Pyaz Paratha + Dahi, Pyaz, Chutney",
+          "price": 100,
+          "popular": false,
+          "desc": "Two aloo pyaz parathas with all accompaniments — affordable and satisfying."
+        },
+        {
+          "id": "item-070",
+          "name": "Combo: 2 Aloo Paratha + Dahi, Pyaz, Chutney",
+          "price": 90,
+          "popular": false,
+          "desc": "Two classic aloo parathas — the simplest, most satisfying combo on the menu."
+        },
+        {
+          "id": "item-071",
+          "name": "Combo: 4 Butter Roti + Rajma Masala + Salad",
+          "price": 150,
+          "popular": false,
+          "desc": "Four butter rotis with hearty rajma and a fresh salad. A proper full meal."
+        },
+        {
+          "id": "item-072",
+          "name": "Combo: 4 Butter Roti + Chana Masala + Salad",
+          "price": 160,
+          "popular": false,
+          "desc": "Four butter rotis with spicy chana and salad — packed with protein and flavour."
+        },
+        {
+          "id": "item-073",
+          "name": "Combo: 4 Butter Roti + Dal Makhani + Salad",
+          "price": 150,
+          "popular": false,
+          "desc": "Four butter rotis with our famous dal makhani and salad. Truly indulgent."
+        }
+      ]
+    },
+    {
+      "id": "cat-beverages",
+      "name": "Beverages",
+      "emoji": "🍹",
+      "items": [
+        {
+          "id": "item-074",
+          "name": "Tea (Chai)",
+          "price": 30,
+          "popular": false,
+          "desc": "Perfectly brewed Indian chai with ginger and spices. The classic fix."
+        },
+        {
+          "id": "item-075",
+          "name": "Hot Coffee",
+          "price": 50,
+          "popular": false,
+          "desc": "Rich, aromatic hot coffee — freshly made and just the way you like it."
+        },
+        {
+          "id": "item-076",
+          "name": "Hot Milk",
+          "price": 50,
+          "popular": false,
+          "desc": "Full-cream hot milk — simple, nourishing and comforting."
+        },
+        {
+          "id": "item-077",
+          "name": "Mango Shake",
+          "price": 100,
+          "popular": true,
+          "desc": "Thick, creamy Alphonso mango shake made with real milk. A summer favourite."
+        },
+        {
+          "id": "item-078",
+          "name": "Pineapple Shake",
+          "price": 100,
+          "popular": false,
+          "desc": "Sweet and tangy pineapple blended with chilled milk. Refreshing and filling."
+        },
+        {
+          "id": "item-079",
+          "name": "Strawberry Shake",
+          "price": 100,
+          "popular": false,
+          "desc": "Vibrant pink strawberry shake — sweet, creamy and absolutely delicious."
+        },
+        {
+          "id": "item-080",
+          "name": "Chocolate Shake",
+          "price": 110,
+          "popular": false,
+          "desc": "Rich chocolate milkshake with real cocoa — thick, cold and utterly satisfying."
+        },
+        {
+          "id": "item-081",
+          "name": "Vanilla Shake",
+          "price": 120,
+          "popular": false,
+          "desc": "Classic creamy vanilla shake — smooth, sweet and a timeless favourite."
+        },
+        {
+          "id": "item-082",
+          "name": "Oreo Shake",
+          "price": 120,
+          "popular": false,
+          "desc": "Blended Oreo cookies with thick chilled milk — indulgent and fun."
+        },
+        {
+          "id": "item-083",
+          "name": "Sitafal Shake",
+          "price": 120,
+          "popular": false,
+          "desc": "Seasonal custard apple blended into a rich, creamy shake. A rare treat."
+        },
+        {
+          "id": "item-084",
+          "name": "Cold Coffee",
+          "price": 100,
+          "popular": true,
+          "desc": "Chilled blended coffee with milk and cream — the perfect afternoon pick-me-up."
+        },
+        {
+          "id": "item-085",
+          "name": "Shahi Lassi",
+          "price": 50,
+          "popular": false,
+          "desc": "Thick, sweet Punjabi lassi with a rich creamy top. Pair it with your paratha."
+        },
+        {
+          "id": "item-086",
+          "name": "Masala Chhach",
+          "price": 30,
+          "popular": false,
+          "desc": "Light, spiced buttermilk with roasted cumin — great to cool down after a spicy meal."
+        },
+        {
+          "id": "item-087",
+          "name": "Pineapple Juice",
+          "price": 50,
+          "popular": false,
+          "desc": "Fresh pineapple juice — sweet, tangy and packed with natural goodness."
+        },
+        {
+          "id": "item-088",
+          "name": "Mosambi Juice",
+          "price": 50,
+          "popular": false,
+          "desc": "Freshly squeezed sweet lime juice — light, refreshing and naturally sweet."
+        }
+      ]
+    }
+  ]
+}
