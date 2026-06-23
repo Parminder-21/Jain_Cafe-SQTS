@@ -4,6 +4,7 @@
   "description": "A responsive, beautiful static website for Jain Cafe - a pure veg cafe located on YN Road, Indore.",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
