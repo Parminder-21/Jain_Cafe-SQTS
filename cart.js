@@ -254,10 +254,5 @@ document.addEventListener('DOMContentLoaded', () => {
             const scrolled = (winScroll / height) * 100;
             progressBar.style.width = `${scrolled}%`;
         }
-        
-        if (heroImg) {
-            const scrollY = window.scrollY;
-            heroImg.style.transform = `translateY(${scrollY * 0.4}px)`;
-        }
     }, { passive: true });
 });
