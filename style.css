@@ -303,14 +303,21 @@ section {
     border-radius: 8px;
     pointer-events: none;
 }
-.hero-img {
+.hero-img-wrap {
     position: relative;
     z-index: 1;
     border-radius: 6px;
     box-shadow: var(--shadow);
     height: 65vh;
     width: 100%;
+    overflow: hidden;
+}
+.hero-img {
+    height: 100%;
+    width: 100%;
     object-fit: cover;
+    transform: scale(1.1) translateY(0px);
+    transition: transform 0.1s ease-out;
 }
 
 /* ===== ABOUT US SECTION ===== */

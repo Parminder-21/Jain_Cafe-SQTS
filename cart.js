@@ -254,5 +254,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const scrolled = (winScroll / height) * 100;
             progressBar.style.width = `${scrolled}%`;
         }
+        
+        if (heroImg) {
+            const scrollY = window.scrollY;
+            // Bounded translation ensures the image moves but never exposes white edges or spills over
+            const translation = Math.max(-25, Math.min(25, scrollY * 0.08));
+            heroImg.style.transform = `scale(1.1) translateY(${translation}px)`;
+        }
     }, { passive: true });
 });
