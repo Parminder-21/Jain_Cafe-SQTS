@@ -981,3 +981,163 @@ textarea.cart-input {
         pointer-events: none;
     }
 }
+
+/* ===== ORDER HISTORY CARD & TIMELINE ===== */
+.history-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    transition: var(--ease);
+}
+.history-card:hover {
+    border-color: rgba(211, 106, 77, 0.3);
+    transform: translateY(-2px);
+}
+.history-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed var(--border);
+    padding-bottom: 0.75rem;
+}
+.history-card-id {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+}
+.history-card-date {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+.history-card-items {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    background: var(--surface-alt);
+    padding: 0.65rem 0.85rem;
+    border-radius: 6px;
+    white-space: pre-line;
+}
+.history-card-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+.history-card-total {
+    color: var(--terracotta);
+    font-size: 1.05rem;
+}
+
+/* Tracking Status Badges */
+.tracking-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.tracking-status-badge.placed { background: rgba(235, 160, 102, 0.15); color: var(--saffron); }
+.tracking-status-badge.accepted { background: rgba(125, 159, 138, 0.15); color: var(--muted-green); }
+.tracking-status-badge.preparing { background: rgba(211, 106, 77, 0.15); color: var(--terracotta); }
+.tracking-status-badge.delivery { background: rgba(235, 160, 102, 0.2); color: #c8814c; }
+.tracking-status-badge.delivered { background: rgba(125, 159, 138, 0.25); color: #21a052; }
+
+/* Timeline progress visualizer */
+.tracking-timeline {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+.tracking-timeline::before {
+    content: '';
+    position: absolute;
+    top: 13px;
+    left: 10px;
+    right: 10px;
+    height: 3px;
+    background: var(--border);
+    z-index: 1;
+}
+.tracking-timeline-progress {
+    position: absolute;
+    top: 13px;
+    left: 10px;
+    height: 3px;
+    background: var(--muted-green);
+    z-index: 1;
+    transition: width 0.4s ease;
+}
+.tracking-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    z-index: 2;
+    width: 20%;
+}
+.tracking-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 3.5px solid var(--border);
+    transition: var(--ease);
+}
+.tracking-step.active .tracking-dot {
+    border-color: var(--muted-green);
+    background: var(--muted-green);
+    box-shadow: 0 0 8px rgba(125, 159, 138, 0.6);
+}
+.tracking-step.completed .tracking-dot {
+    border-color: var(--muted-green);
+    background: var(--muted-green);
+}
+.tracking-label {
+    font-size: 0.55rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-align: center;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.2px;
+}
+.tracking-step.active .tracking-label {
+    color: var(--muted-green);
+}
+.tracking-step.completed .tracking-label {
+    color: var(--text);
+}
+
+.reorder-btn {
+    background: transparent;
+    border: 1px solid var(--terracotta);
+    color: var(--terracotta);
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--ease);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+.reorder-btn:hover {
+    background: var(--terracotta);
+    color: #fff;
+}

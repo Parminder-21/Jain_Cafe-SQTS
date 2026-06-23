@@ -97,6 +97,9 @@
                 <a href="/admin" class="theme-toggle" aria-label="Admin Dashboard" title="Admin Dashboard">
                     <i data-feather="lock"></i>
                 </a>
+                <button id="history-toggle-btn" class="theme-toggle" aria-label="Order History" title="Order History">
+                    <i data-feather="clock"></i>
+                </button>
                 <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
                     <i data-feather="moon" id="theme-icon"></i>
                 </button>
@@ -371,6 +374,25 @@
     </div>
 
     <div id="cart-overlay" class="cart-overlay"></div>
+
+    <!-- ===== ORDER HISTORY UI ===== -->
+    <!-- Order History Sidebar -->
+    <div id="history-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Your Orders</h3>
+            <button id="close-history-btn" class="close-cart-btn" aria-label="Close Order History">
+                <i data-feather="x"></i>
+            </button>
+        </div>
+        
+        <div class="cart-body" style="flex: 1; overflow-y: auto; padding: 1.5rem;">
+            <div class="cart-items" id="history-items-container" style="padding: 0; overflow: visible; display: flex; flex-direction: column; gap: 1.5rem;">
+                <div class="empty-cart-msg">You haven't placed any orders yet.</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="history-overlay" class="cart-overlay"></div>
 
     <!-- ===== JAVASCRIPT ===== -->
     <script src="menu.js"></script>

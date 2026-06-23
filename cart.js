@@ -1,5 +1,6 @@
 // Manage the customer shopping cart and checkout flow
 let cart = JSON.parse(localStorage.getItem('jainCafeCart')) || [];
+let orderHistory = JSON.parse(localStorage.getItem('jainCafeOrderHistory')) || [];
 
 // Save current cart state to local storage
 function saveCart() {
@@ -49,11 +50,22 @@ const custName = document.getElementById('cust-name');
 const custPhone = document.getElementById('cust-phone');
 const custAddress = document.getElementById('cust-address');
 
+// Order History elements
+const historyToggleBtn = document.getElementById('history-toggle-btn');
+const closeHistoryBtn = document.getElementById('close-history-btn');
+const historySidebar = document.getElementById('history-sidebar');
+const historyOverlay = document.getElementById('history-overlay');
+const historyItemsContainer = document.getElementById('history-items-container');
+
 // Event Handlers
 cartToggleBtn.addEventListener('click', toggleCart);
 closeCartBtn.addEventListener('click', toggleCart);
 cartOverlay.addEventListener('click', toggleCart);
 checkoutBtn.addEventListener('click', processCheckout);
+
+if (historyToggleBtn) historyToggleBtn.addEventListener('click', toggleHistory);
+if (closeHistoryBtn) closeHistoryBtn.addEventListener('click', toggleHistory);
+if (historyOverlay) historyOverlay.addEventListener('click', toggleHistory);
 
 function toggleCart() {
     cartSidebar.classList.toggle('active');
@@ -220,7 +232,22 @@ async function processCheckout() {
         });
         
         if (response.ok) {
-            alert('Your order has been placed successfully! We will contact you shortly.');
+            // Log to Order History
+            const orderId = `JC-${Date.now().toString().slice(-6)}-${Math.floor(100 + Math.random() * 900)}`;
+            const newOrder = {
+                id: orderId,
+                timestamp: Date.now(),
+                items: orderItemsText,
+                total: total,
+                name: name,
+                address: address,
+                paymentMethod: paymentMethod,
+                cartItems: JSON.parse(JSON.stringify(cart))
+            };
+            orderHistory.unshift(newOrder);
+            localStorage.setItem('jainCafeOrderHistory', JSON.stringify(orderHistory));
+
+            alert(`Your order has been placed successfully! Order ID: ${orderId}. We will contact you shortly.`);
             cart = [];
             saveCart();
             updateCartCount();
@@ -238,6 +265,157 @@ async function processCheckout() {
         checkoutBtn.disabled = false;
     }
 }
+
+// Order History Toggling and Tracking Logic
+let historyRefreshInterval = null;
+
+function toggleHistory() {
+    if (historySidebar) {
+        historySidebar.classList.toggle('active');
+        historyOverlay.classList.toggle('active');
+        if (historySidebar.classList.contains('active')) {
+            renderHistory();
+            clearInterval(historyRefreshInterval);
+            historyRefreshInterval = setInterval(renderHistory, 10000);
+        } else {
+            clearInterval(historyRefreshInterval);
+        }
+    }
+}
+
+function getOrderStatus(timestamp) {
+    const elapsed = Date.now() - timestamp;
+    const mins = elapsed / 60000;
+    
+    if (mins < 2) {
+        return { status: 'Placed', text: 'Order Placed', class: 'placed', progress: '10%' };
+    } else if (mins < 5) {
+        return { status: 'Accepted', text: 'Order Accepted', class: 'accepted', progress: '30%' };
+    } else if (mins < 15) {
+        return { status: 'Preparing', text: 'Preparing Food', class: 'preparing', progress: '52%' };
+    } else if (mins < 30) {
+        return { status: 'Delivery', text: 'Out for Delivery', class: 'delivery', progress: '76%' };
+    } else {
+        return { status: 'Delivered', text: 'Delivered', class: 'delivered', progress: '100%' };
+    }
+}
+
+function stepClass(stepName, currentStatus) {
+    const statuses = ['Placed', 'Accepted', 'Preparing', 'Delivery', 'Delivered'];
+    const currentIdx = statuses.indexOf(currentStatus);
+    const stepIdx = statuses.indexOf(stepName);
+    
+    if (currentIdx === stepIdx) {
+        return 'active';
+    } else if (stepIdx < currentIdx) {
+        return 'completed';
+    } else {
+        return '';
+    }
+}
+
+function renderHistory() {
+    if (!historyItemsContainer) return;
+    
+    if (orderHistory.length === 0) {
+        historyItemsContainer.innerHTML = '<div class="empty-cart-msg">You haven\'t placed any orders yet.</div>';
+        return;
+    }
+    
+    let html = '';
+    orderHistory.forEach(order => {
+        const statusInfo = getOrderStatus(order.timestamp);
+        const dateStr = new Date(order.timestamp).toLocaleString('en-IN', {
+            dateStyle: 'medium',
+            timeStyle: 'short'
+        });
+        
+        let statusBadgeIcon = '';
+        if (statusInfo.status !== 'Delivered') {
+            statusBadgeIcon = '<span class="spinner-icon" style="display:inline-block; animation: spin 2s linear infinite;">⏳</span> ';
+        } else {
+            statusBadgeIcon = '✅ ';
+        }
+        
+        html += `
+            <div class="history-card" id="order-${order.id}">
+                <div class="history-card-header">
+                    <div>
+                        <div class="history-card-id">${order.id}</div>
+                        <div class="history-card-date">${dateStr}</div>
+                    </div>
+                    <div class="tracking-status-badge ${statusInfo.class}">
+                        ${statusBadgeIcon}<span>${statusInfo.text}</span>
+                    </div>
+                </div>
+                
+                <div class="history-card-items">${order.items}</div>
+                
+                <div class="history-card-summary">
+                    <div>Total: <span class="history-card-total">₹${order.total}</span></div>
+                    <button class="reorder-btn" onclick="reorder('${order.id}')">
+                        Re-order
+                    </button>
+                </div>
+                
+                <!-- Tracking Timeline -->
+                <div class="tracking-timeline">
+                    <div class="tracking-timeline-progress" style="width: ${statusInfo.progress}"></div>
+                    
+                    <div class="tracking-step ${stepClass('Placed', statusInfo.status)}">
+                        <div class="tracking-dot"></div>
+                        <div class="tracking-label">Placed</div>
+                    </div>
+                    <div class="tracking-step ${stepClass('Accepted', statusInfo.status)}">
+                        <div class="tracking-dot"></div>
+                        <div class="tracking-label">Accepted</div>
+                    </div>
+                    <div class="tracking-step ${stepClass('Preparing', statusInfo.status)}">
+                        <div class="tracking-dot"></div>
+                        <div class="tracking-label">Preparing</div>
+                    </div>
+                    <div class="tracking-step ${stepClass('Delivery', statusInfo.status)}">
+                        <div class="tracking-dot"></div>
+                        <div class="tracking-label">Out</div>
+                    </div>
+                    <div class="tracking-step ${stepClass('Delivered', statusInfo.status)}">
+                        <div class="tracking-dot"></div>
+                        <div class="tracking-label">Delivered</div>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+    
+    historyItemsContainer.innerHTML = html;
+}
+
+window.reorder = function(orderId) {
+    const order = orderHistory.find(o => o.id === orderId);
+    if (!order) return;
+    
+    order.cartItems.forEach(item => {
+        const existing = cart.find(ci => ci.name === item.name);
+        if (existing) {
+            existing.quantity += item.quantity;
+        } else {
+            cart.push({ name: item.name, price: item.price, quantity: item.quantity });
+        }
+    });
+    
+    saveCart();
+    updateCartCount();
+    showToast('Items added to cart! 🛒');
+    
+    if (historySidebar && historySidebar.classList.contains('active')) {
+        toggleHistory();
+    }
+    setTimeout(() => {
+        if (cartSidebar && !cartSidebar.classList.contains('active')) {
+            toggleCart();
+        }
+    }, 300);
+};
 
 // Initialize components
 document.addEventListener('DOMContentLoaded', () => {
