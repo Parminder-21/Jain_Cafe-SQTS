@@ -39,7 +39,23 @@ A responsive, premium web application for Jain Cafe (YN Road, Indore) featuring 
 
 3. **Open the App**:
    - **Customer Landing & Menu**: Navigate to [http://localhost:3000](http://localhost:3000)
-   - **Admin Panel**: Navigate to [http://localhost:3000/admin](http://localhost:3000/admin) (Password is configured in `server.js`)
+   - **Admin Panel**: Navigate to [http://localhost:3000/admin.html](http://localhost:3000/admin.html) (Password is configured in `server.js`)
+
+---
+
+## 🌐 Live Deployments (डिप्लॉयमेंट लिंक्स)
+
+This project is deployed on two different hosting platforms. Here is what each is used for:
+
+### 1. Render Deployment (Recommended for Full Features)
+* **Link**: [https://jain-cafe-sqts.onrender.com](https://jain-cafe-sqts.onrender.com)
+* **What it does**: Runs the full Node.js Express server backend (`server.js`) 24/7.
+* **Admin Panel**: **Fully Functional (सक्रिय)**. Any changes you make to the menu (adding, editing, or deleting categories and dishes) will be saved permanently.
+
+### 2. Vercel Deployment (Static Frontend Preview)
+* **Link**: [https://jain-cafe-sqts.vercel.app](https://jain-cafe-sqts.vercel.app)
+* **What it does**: Hosts the frontend static client files with extremely fast loading speeds.
+* **Admin Panel**: **Static Preview Only (Read-Only)**. You can log in and view the dashboard, but you cannot save any menu updates because Vercel's serverless environment does not run a persistent Express server database.
 
 ---
 
