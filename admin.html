@@ -589,6 +589,7 @@
     const API = '/api';
     let menuData = null;
     let editingItem = null; // { catId, itemId }
+    let isStaticPreview = false;
 
     // ===== LOGIN =====
     document.getElementById('admin-password').addEventListener('keypress', (e) => {
@@ -610,6 +611,7 @@
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('admin-app').style.display = 'block';
                 sessionStorage.setItem('admin-auth', '1');
+                isStaticPreview = false;
                 await loadMenu();
                 feather.replace();
             } else {
@@ -618,10 +620,21 @@
                 feather.replace();
             }
         } catch(e) {
-            document.getElementById('login-error').textContent = '⚠️ Cannot connect to server! Make sure server.js is running.';
-            document.getElementById('login-error').style.display = 'block';
-            btn.innerHTML = '<i data-feather="unlock"></i> Login to Dashboard';
-            feather.replace();
+            // Local fallback for offline/static deployment (Vercel)
+            if (pw === 'jaincafe2025') {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('admin-app').style.display = 'block';
+                sessionStorage.setItem('admin-auth', '1');
+                isStaticPreview = true;
+                await loadMenu();
+                feather.replace();
+                showToast('Logged in (Static Preview Mode) ✅', 'success');
+            } else {
+                document.getElementById('login-error').textContent = '⚠️ Password incorrect or server connection failed.';
+                document.getElementById('login-error').style.display = 'block';
+                btn.innerHTML = '<i data-feather="unlock"></i> Login to Dashboard';
+                feather.replace();
+            }
         }
     }
 
@@ -632,9 +645,50 @@
 
     // ===== LOAD MENU =====
     async function loadMenu() {
-        const res = await fetch(`${API}/menu`);
-        menuData = await res.json();
+        try {
+            const res = await fetch(`${API}/menu`);
+            if (res.ok) {
+                menuData = await res.json();
+                isStaticPreview = false;
+            } else {
+                throw new Error('API returned status ' + res.status);
+            }
+        } catch (e) {
+            console.warn('[Admin] API load failed, trying static fallback...', e);
+            try {
+                const res = await fetch('data/menu.json');
+                if (res.ok) {
+                    menuData = await res.json();
+                    isStaticPreview = true;
+                    showStaticPreviewWarning();
+                } else {
+                    throw new Error('Static fallback returned status ' + res.status);
+                }
+            } catch (err) {
+                showToast('Unable to load menu data from server or local file.', 'error');
+                return;
+            }
+        }
         renderAll();
+    }
+
+    function showStaticPreviewWarning() {
+        const topbar = document.querySelector('.topbar-title');
+        if (topbar && !document.getElementById('static-warning')) {
+            const warning = document.createElement('span');
+            warning.id = 'static-warning';
+            warning.style.color = 'var(--accent-3)';
+            warning.style.fontSize = '0.85rem';
+            warning.style.marginLeft = '1rem';
+            warning.style.background = 'rgba(235,160,102,0.1)';
+            warning.style.padding = '0.25rem 0.5rem';
+            warning.style.borderRadius = '4px';
+            warning.style.border = '1px solid var(--accent-3)';
+            warning.style.display = 'inline-block';
+            warning.style.verticalAlign = 'middle';
+            warning.innerHTML = '⚠️ Static Preview Mode (Read-Only)';
+            topbar.appendChild(warning);
+        }
     }
 
     function renderAll() {
@@ -777,6 +831,10 @@
     }
 
     async function saveCategory() {
+        if (isStaticPreview) {
+            showToast('Changes cannot be saved in Static Preview Mode (Vercel/Static Host). Please run locally with node server.js.', 'error');
+            return;
+        }
         const name = document.getElementById('cat-name').value.trim();
         const emoji = document.getElementById('cat-emoji').value.trim() || '🍽️';
         if (!name) { showToast('Category name required!', 'error'); return; }
@@ -832,6 +890,10 @@
     }
 
     async function saveItem() {
+        if (isStaticPreview) {
+            showToast('Changes cannot be saved in Static Preview Mode (Vercel/Static Host). Please run locally with node server.js.', 'error');
+            return;
+        }
         const catId = document.getElementById('item-cat-id').value;
         const name = document.getElementById('item-name').value.trim();
         const desc = document.getElementById('item-desc').value.trim();
@@ -867,6 +929,10 @@
 
     // ===== CONFIRM + DELETE =====
     function confirmDeleteItem(catId, itemId, itemName) {
+        if (isStaticPreview) {
+            showToast('Changes cannot be saved in Static Preview Mode (Vercel/Static Host). Please run locally with node server.js.', 'error');
+            return;
+        }
         document.getElementById('confirm-title').textContent = 'Delete Item?';
         document.getElementById('confirm-desc').textContent = `Are you sure you want to delete "${itemName}"? This action cannot be undone.`;
         document.getElementById('confirm-ok-btn').onclick = async () => {
@@ -882,6 +948,10 @@
     }
 
     function confirmDeleteCategory(catId, catName) {
+        if (isStaticPreview) {
+            showToast('Changes cannot be saved in Static Preview Mode (Vercel/Static Host). Please run locally with node server.js.', 'error');
+            return;
+        }
         document.getElementById('confirm-title').textContent = 'Delete Category?';
         document.getElementById('confirm-desc').textContent = `Delete "${catName}" and ALL its items? This cannot be undone!`;
         document.getElementById('confirm-ok-btn').onclick = async () => {

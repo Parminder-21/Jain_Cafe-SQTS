@@ -302,9 +302,43 @@ async function initializeMenu() {
     const tabsEl = document.getElementById('menu-tabs');
     if (!container || !tabsEl) return;
 
+    let data = null;
+
+    // Attempt 1: Fetch from backend Express API
     try {
         const response = await fetch(`${API_BASE}/menu`);
-        const data = await response.json();
+        if (response.ok) {
+            data = await response.json();
+        } else {
+            console.warn(`[Menu Renderer] API returned status ${response.status}. Trying static fallback...`);
+        }
+    } catch (err) {
+        console.warn('[Menu Renderer] API connection failed. Trying static fallback...', err);
+    }
+
+    // Attempt 2: Fetch from static fallback JSON file (works on Vercel and local static servers)
+    if (!data) {
+        try {
+            const response = await fetch('data/menu.json');
+            if (response.ok) {
+                data = await response.json();
+                console.log('[Menu Renderer] Successfully loaded menu from static fallback file.');
+            } else {
+                throw new Error(`Static fallback returned status ${response.status}`);
+            }
+        } catch (err) {
+            container.innerHTML = `
+                <div class="menu-empty">
+                    <span>⚠️</span>
+                    <p>Unable to load the menu. Please check that the server is online.</p>
+                </div>`;
+            tabsEl.innerHTML = '';
+            console.error('[Menu Renderer] Both API and static fallback failed:', err);
+            return;
+        }
+    }
+
+    try {
         allCategories = data.categories;
 
         // Build navigation tabs
@@ -338,10 +372,10 @@ async function initializeMenu() {
         container.innerHTML = `
             <div class="menu-empty">
                 <span>⚠️</span>
-                <p>Unable to load the menu. Please check that the server is online.</p>
+                <p>Unable to process menu data.</p>
             </div>`;
         tabsEl.innerHTML = '';
-        console.error('[Menu Renderer] Initialisation error:', err);
+        console.error('[Menu Renderer] Processing error:', err);
     }
 }
 
