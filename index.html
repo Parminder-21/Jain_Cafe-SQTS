@@ -100,7 +100,7 @@
                 <button id="history-toggle-btn" class="theme-toggle" aria-label="Order History" title="Order History">
                     <i data-feather="clock"></i>
                 </button>
-                <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+                <button id="theme-toggle-btn" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
                     <i data-feather="moon" id="theme-icon"></i>
                 </button>
                 <button class="menu-toggle" aria-label="Open navigation menu">
@@ -402,7 +402,7 @@
         feather.replace();
 
         // --- Theme Toggle ---
-        const themeBtn = document.querySelector('.theme-toggle');
+        const themeBtn = document.getElementById('theme-toggle-btn');
         const themeIcon = document.getElementById('theme-icon');
         const root = document.documentElement;
 
