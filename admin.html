@@ -377,6 +377,96 @@
         .quick-form-title { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
         .quick-form-row { display: flex; gap: 1rem; align-items: flex-end; }
         .quick-form-row .form-group { flex: 1; }
+
+        /* ===== HISTORY LOGS ===== */
+        .history-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            transition: var(--ease);
+        }
+        .history-card:hover {
+            border-color: rgba(211,106,77,0.25);
+            transform: translateY(-1px);
+        }
+        .history-left {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            flex: 1;
+            min-width: 0;
+        }
+        .history-icon-wrap {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        .history-icon-wrap.add { background: rgba(74,222,128,0.15); color: var(--success); }
+        .history-icon-wrap.delete { background: rgba(224,92,110,0.15); color: var(--danger); }
+        .history-icon-wrap.edit { background: rgba(59,130,246,0.15); color: #3b82f6; }
+        .history-icon-wrap.undo { background: rgba(139,92,246,0.15); color: #8b5cf6; }
+        
+        .history-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            flex: 1;
+            min-width: 0;
+        }
+        .history-desc {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.4;
+        }
+        .history-time {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        .history-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+            margin-right: 0.5rem;
+        }
+        .history-badge.add { background: rgba(74,222,128,0.15); color: var(--success); border: 1px solid rgba(74,222,128,0.3); }
+        .history-badge.delete { background: rgba(224,92,110,0.15); color: var(--danger); border: 1px solid rgba(224,92,110,0.3); }
+        .history-badge.edit { background: rgba(59,130,246,0.15); color: #3b82f6; border: 1px solid rgba(59,130,246,0.3); }
+        .history-badge.undo { background: rgba(139,92,246,0.15); color: #8b5cf6; border: 1px solid rgba(139,92,246,0.3); }
+        
+        .history-right {
+            flex-shrink: 0;
+        }
+        .btn-undone-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: rgba(255,255,255,0.05);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -422,6 +512,9 @@
                 </button>
                 <button class="nav-item" onclick="showView('menu')">
                     <i data-feather="list"></i> Manage Menu
+                </button>
+                <button class="nav-item" onclick="showView('history')">
+                    <i data-feather="activity"></i> History Logs
                 </button>
                 <div class="nav-cat-section">
                     <div class="nav-cat-label">Categories</div>
@@ -486,6 +579,25 @@
                     </div>
 
                     <div id="menu-categories-list"></div>
+                </div>
+
+                <!-- HISTORY VIEW -->
+                <div id="view-history" style="display:none;">
+                    <div class="section-header">
+                        <div class="section-title"><span>⏳</span> Action History Logs</div>
+                        <button class="btn btn-danger" onclick="confirmClearHistory()">
+                            <i data-feather="trash-2"></i> Clear History
+                        </button>
+                    </div>
+
+                    <div class="search-bar-wrap">
+                        <div class="search-bar">
+                            <i data-feather="search"></i>
+                            <input type="text" id="history-search" placeholder="Search history logs..." oninput="filterHistory()">
+                        </div>
+                    </div>
+
+                    <div id="history-list-container"></div>
                 </div>
             </div>
         </div>
@@ -590,6 +702,7 @@
     let menuData = null;
     let editingItem = null; // { catId, itemId }
     let isStaticPreview = false;
+    let historyData = [];
 
     // ===== LOGIN =====
     document.getElementById('admin-password').addEventListener('keypress', (e) => {
@@ -818,9 +931,198 @@
     function showView(v) {
         document.getElementById('view-dashboard').style.display = v === 'dashboard' ? 'block' : 'none';
         document.getElementById('view-menu').style.display = v === 'menu' ? 'block' : 'none';
+        document.getElementById('view-history').style.display = v === 'history' ? 'block' : 'none';
         document.querySelectorAll('.nav-item').forEach((btn, i) => {
-            btn.classList.toggle('active', (v === 'dashboard' && i === 0) || (v === 'menu' && i === 1));
+            btn.classList.toggle('active', 
+                (v === 'dashboard' && i === 0) || 
+                (v === 'menu' && i === 1) || 
+                (v === 'history' && i === 2)
+            );
         });
+        if (v === 'history') {
+            loadHistory();
+        }
+    }
+
+    // ===== HISTORY LOGS =====
+    async function loadHistory() {
+        if (isStaticPreview) {
+            renderHistoryStaticPreview();
+            return;
+        }
+        try {
+            const res = await fetch(`${API}/history`);
+            if (res.ok) {
+                historyData = await res.json();
+                renderHistory();
+            } else {
+                showToast('Failed to load history logs.', 'error');
+            }
+        } catch (e) {
+            console.error('Failed to load history', e);
+            showToast('Unable to reach history API.', 'error');
+        }
+    }
+
+    function renderHistoryStaticPreview() {
+        const container = document.getElementById('history-list-container');
+        container.innerHTML = `
+            <div class="empty-state">
+                <span>⚠️</span>
+                <p>History logs are not available in Static Preview Mode (Vercel).</p>
+                <p style="font-size:0.85rem;margin-top:0.5rem;color:var(--text-muted);">Run the application locally using <code>node server.js</code> or on Render to use this feature.</p>
+            </div>
+        `;
+    }
+
+    function renderHistory() {
+        const container = document.getElementById('history-list-container');
+        if (!historyData || historyData.length === 0) {
+            container.innerHTML = '<div class="empty-state"><span>⏳</span>No history records found.</div>';
+            return;
+        }
+
+        container.innerHTML = historyData.map(entry => {
+            let actionClass = '';
+            let actionBadge = '';
+            let icon = '';
+
+            switch (entry.actionType) {
+                case 'add_category':
+                case 'add_item':
+                    actionClass = 'add';
+                    actionBadge = 'Add';
+                    icon = '➕';
+                    break;
+                case 'delete_category':
+                case 'delete_item':
+                    actionClass = 'delete';
+                    actionBadge = 'Delete';
+                    icon = '🗑️';
+                    break;
+                case 'edit_item':
+                    actionClass = 'edit';
+                    actionBadge = 'Edit';
+                    icon = '✏️';
+                    break;
+                case 'undo_action':
+                    actionClass = 'undo';
+                    actionBadge = 'Undo';
+                    icon = '↩️';
+                    break;
+                default:
+                    actionClass = 'edit';
+                    actionBadge = entry.actionType;
+                    icon = '⚙️';
+            }
+
+            const isUndoable = ['delete_item', 'delete_category', 'add_item', 'add_category', 'edit_item'].includes(entry.actionType);
+            const dateStr = formatDate(entry.timestamp);
+
+            let actionBtn = '';
+            if (isUndoable) {
+                if (entry.undone) {
+                    actionBtn = `<span class="btn-undone-badge">Undone ✅</span>`;
+                } else {
+                    actionBtn = `
+                        <button class="btn btn-ghost btn-sm" onclick="triggerUndo('${entry.id}', '${escHtml(entry.description)}')">
+                            <i data-feather="corner-up-left" style="width:14px;height:14px;margin-right:2px;"></i> Undo
+                        </button>
+                    `;
+                }
+            }
+
+            return `
+                <div class="history-card" id="history-${entry.id}">
+                    <div class="history-left">
+                        <div class="history-icon-wrap ${actionClass}">${icon}</div>
+                        <div class="history-details">
+                            <div class="history-desc">
+                                <span class="history-badge ${actionClass}">${actionBadge}</span>
+                                ${escHtml(entry.description)}
+                            </div>
+                            <div class="history-time">${dateStr}</div>
+                        </div>
+                    </div>
+                    <div class="history-right">
+                        ${actionBtn}
+                    </div>
+                </div>
+            `;
+        }).join('');
+        feather.replace();
+    }
+
+    function filterHistory() {
+        const q = document.getElementById('history-search').value.toLowerCase();
+        document.querySelectorAll('[id^="history-"]').forEach(card => {
+            const text = card.querySelector('.history-desc')?.textContent.toLowerCase() || '';
+            card.style.display = text.includes(q) ? '' : 'none';
+        });
+    }
+
+    function confirmClearHistory() {
+        if (isStaticPreview) {
+            showToast('Changes cannot be saved in Static Preview Mode.', 'error');
+            return;
+        }
+        document.getElementById('confirm-title').textContent = 'Clear All History?';
+        document.getElementById('confirm-desc').textContent = 'Are you sure you want to permanently clear all history logs? This cannot be undone.';
+        document.getElementById('confirm-ok-btn').onclick = async () => {
+            try {
+                const res = await fetch(`${API}/history`, { method: 'DELETE' });
+                if (res.ok) {
+                    showToast('History cleared.', 'success');
+                    closeModalById('confirm-modal');
+                    await loadHistory();
+                } else {
+                    showToast('Failed to clear history.', 'error');
+                }
+            } catch (err) {
+                showToast('Error connecting to server.', 'error');
+            }
+        };
+        openModalById('confirm-modal');
+    }
+
+    async function triggerUndo(historyId, actionDesc) {
+        if (isStaticPreview) {
+            showToast('Changes cannot be saved in Static Preview Mode.', 'error');
+            return;
+        }
+        
+        try {
+            const res = await fetch(`${API}/history/undo/${historyId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            const data = await res.json();
+            if (res.ok && data.success) {
+                showToast(data.message || 'Action undone successfully! ✅', 'success');
+                await loadMenu();
+                await loadHistory();
+            } else {
+                showToast(data.error || 'Failed to undo action.', 'error');
+            }
+        } catch (err) {
+            showToast('Error sending undo request.', 'error');
+        }
+    }
+
+    function formatDate(isoString) {
+        try {
+            const date = new Date(isoString);
+            return date.toLocaleString('en-IN', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            });
+        } catch (e) {
+            return isoString;
+        }
     }
 
     // ===== CATEGORY MODAL =====

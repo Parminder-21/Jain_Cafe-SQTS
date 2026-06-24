@@ -22,10 +22,47 @@ function writeMenu(data) {
     fs.writeFileSync(MENU_FILE, JSON.stringify(data, null, 2), 'utf8');
 }
 
+const HISTORY_FILE = path.join(__dirname, 'data', 'history.json');
+
+function readHistory() {
+    try {
+        if (!fs.existsSync(HISTORY_FILE)) {
+            fs.writeFileSync(HISTORY_FILE, '[]', 'utf8');
+        }
+        return JSON.parse(fs.readFileSync(HISTORY_FILE, 'utf8'));
+    } catch (e) {
+        return [];
+    }
+}
+
+function writeHistory(data) {
+    fs.writeFileSync(HISTORY_FILE, JSON.stringify(data, null, 2), 'utf8');
+}
+
+function addHistoryEntry(actionType, details) {
+    const history = readHistory();
+    const newEntry = {
+        id: `hist-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+        timestamp: new Date().toISOString(),
+        actionType,
+        undone: false,
+        ...details
+    };
+    history.push(newEntry);
+    writeHistory(history);
+}
+
 // Generate unique identifier strings for categories and dishes
 function generateId(prefix) {
     return `${prefix}-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 }
+
+/* ──────────────────────────────────────────
+   DEBUG / STATUS ENDPOINT
+   ────────────────────────────────────────── */
+app.get('/api/test', (req, res) => {
+    res.send('Express backend is running successfully!');
+});
 
 /* ──────────────────────────────────────────
    AUTHENTICATION ENDPOINT
@@ -68,6 +105,14 @@ app.post('/api/categories', (req, res) => {
 
     menu.categories.push(newCat);
     writeMenu(menu);
+
+    addHistoryEntry('add_category', {
+        description: `Added category "${newCat.emoji} ${newCat.name}"`,
+        catId: newCat.id,
+        catName: newCat.name,
+        emoji: newCat.emoji
+    });
+
     res.json({ success: true, category: newCat });
 });
 
@@ -76,6 +121,15 @@ app.delete('/api/categories/:catId', (req, res) => {
     const menu = readMenu();
     const idx = menu.categories.findIndex(c => c.id === req.params.catId);
     if (idx === -1) return res.status(404).json({ error: 'Category not found.' });
+
+    const catToDelete = menu.categories[idx];
+
+    addHistoryEntry('delete_category', {
+        description: `Deleted category "${catToDelete.emoji} ${catToDelete.name}" (${catToDelete.items.length} items)`,
+        catId: catToDelete.id,
+        catName: catToDelete.name,
+        categoryDetails: catToDelete
+    });
 
     menu.categories.splice(idx, 1);
     writeMenu(menu);
@@ -103,6 +157,16 @@ app.post('/api/categories/:catId/items', (req, res) => {
 
     cat.items.push(newItem);
     writeMenu(menu);
+
+    addHistoryEntry('add_item', {
+        description: `Added item "${newItem.name}" to category "${cat.emoji} ${cat.name}"`,
+        catId: cat.id,
+        catName: cat.name,
+        itemId: newItem.id,
+        itemName: newItem.name,
+        itemDetails: newItem
+    });
+
     res.json({ success: true, item: newItem });
 });
 
@@ -116,12 +180,24 @@ app.put('/api/categories/:catId/items/:itemId', (req, res) => {
     const item = cat.items.find(i => i.id === req.params.itemId);
     if (!item) return res.status(404).json({ error: 'Item not found.' });
 
+    const oldItem = { ...item };
+
     if (name !== undefined) item.name = name;
     if (price !== undefined) item.price = parseFloat(price);
     if (popular !== undefined) item.popular = popular;
     if (desc !== undefined) item.desc = desc;
 
     writeMenu(menu);
+
+    addHistoryEntry('edit_item', {
+        description: `Updated item "${item.name}" in category "${cat.emoji} ${cat.name}"`,
+        catId: cat.id,
+        itemId: item.id,
+        itemName: item.name,
+        before: oldItem,
+        after: { ...item }
+    });
+
     res.json({ success: true, item });
 });
 
@@ -134,9 +210,175 @@ app.delete('/api/categories/:catId/items/:itemId', (req, res) => {
     const idx = cat.items.findIndex(i => i.id === req.params.itemId);
     if (idx === -1) return res.status(404).json({ error: 'Item not found.' });
 
+    const itemToDelete = cat.items[idx];
+
+    addHistoryEntry('delete_item', {
+        description: `Deleted item "${itemToDelete.name}" from category "${cat.emoji} ${cat.name}"`,
+        catId: cat.id,
+        catName: cat.name,
+        itemId: itemToDelete.id,
+        itemName: itemToDelete.name,
+        itemDetails: itemToDelete
+    });
+
     cat.items.splice(idx, 1);
     writeMenu(menu);
     res.json({ success: true });
+});
+
+/* ──────────────────────────────────────────
+   HISTORY API ENDPOINTS
+   ────────────────────────────────────────── */
+
+// Get history logs
+app.get('/api/history', (req, res) => {
+    try {
+        const history = readHistory();
+        res.json(history.slice().reverse());
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to retrieve history data.' });
+    }
+});
+
+// Clear all history logs
+app.delete('/api/history', (req, res) => {
+    try {
+        writeHistory([]);
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to clear history.' });
+    }
+});
+
+// Undo a history action
+app.post('/api/history/undo/:id', (req, res) => {
+    const { id } = req.params;
+    const history = readHistory();
+    const entryIdx = history.findIndex(h => h.id === id);
+
+    if (entryIdx === -1) {
+        return res.status(404).json({ error: 'History entry not found.' });
+    }
+
+    const entry = history[entryIdx];
+    if (entry.undone) {
+        return res.status(400).json({ error: 'This action has already been undone.' });
+    }
+
+    const menu = readMenu();
+    let success = false;
+    let message = '';
+
+    try {
+        switch (entry.actionType) {
+            case 'delete_item': {
+                let cat = menu.categories.find(c => c.id === entry.catId);
+                if (!cat) {
+                    cat = {
+                        id: entry.catId,
+                        name: entry.catName || 'Restored Category',
+                        emoji: '🍽️',
+                        items: []
+                    };
+                    menu.categories.push(cat);
+                }
+                if (!cat.items.some(i => i.id === entry.itemId)) {
+                    cat.items.push(entry.itemDetails);
+                }
+                success = true;
+                message = `Restored item "${entry.itemName}" to "${cat.name}"`;
+                break;
+            }
+
+            case 'delete_category': {
+                if (!menu.categories.some(c => c.id === entry.catId)) {
+                    menu.categories.push(entry.categoryDetails);
+                    success = true;
+                    message = `Restored category "${entry.catName}" with items.`;
+                } else {
+                    return res.status(400).json({ error: 'Category already exists.' });
+                }
+                break;
+            }
+
+            case 'add_item': {
+                const cat = menu.categories.find(c => c.id === entry.catId);
+                if (cat) {
+                    const itemIdx = cat.items.findIndex(i => i.id === entry.itemId);
+                    if (itemIdx !== -1) {
+                        cat.items.splice(itemIdx, 1);
+                        success = true;
+                        message = `Removed added item "${entry.itemName}"`;
+                    } else {
+                        return res.status(400).json({ error: 'Item not found in category.' });
+                    }
+                } else {
+                    return res.status(400).json({ error: 'Category not found.' });
+                }
+                break;
+            }
+
+            case 'add_category': {
+                const catIdx = menu.categories.findIndex(c => c.id === entry.catId);
+                if (catIdx !== -1) {
+                    const cat = menu.categories[catIdx];
+                    if (cat.items.length > 0) {
+                        return res.status(400).json({ error: 'Cannot undo: Category now contains items.' });
+                    }
+                    menu.categories.splice(catIdx, 1);
+                    success = true;
+                    message = `Removed added category "${entry.catName}"`;
+                } else {
+                    return res.status(400).json({ error: 'Category not found.' });
+                }
+                break;
+            }
+
+            case 'edit_item': {
+                const cat = menu.categories.find(c => c.id === entry.catId);
+                if (cat) {
+                    const item = cat.items.find(i => i.id === entry.itemId);
+                    if (item) {
+                        Object.assign(item, entry.before);
+                        success = true;
+                        message = `Restored item "${entry.itemName}" to previous state.`;
+                    } else {
+                        return res.status(400).json({ error: 'Item not found.' });
+                    }
+                } else {
+                    return res.status(400).json({ error: 'Category not found.' });
+                }
+                break;
+            }
+
+            default:
+                return res.status(400).json({ error: 'Unsupported undo action.' });
+        }
+
+        if (success) {
+            writeMenu(menu);
+            entry.undone = true;
+            writeHistory(history);
+            
+            // Add a history log for the undo itself
+            const undoHistory = readHistory();
+            undoHistory.push({
+                id: `hist-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+                timestamp: new Date().toISOString(),
+                actionType: 'undo_action',
+                undone: false,
+                description: `Undid action: ${entry.description}`
+            });
+            writeHistory(undoHistory);
+
+            return res.json({ success: true, message });
+        } else {
+            return res.status(500).json({ error: 'Failed to perform undo.' });
+        }
+
+    } catch (err) {
+        return res.status(500).json({ error: `Error during undo: ${err.message}` });
+    }
 });
 
 /* ──────────────────────────────────────────
